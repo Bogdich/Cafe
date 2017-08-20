@@ -1,6 +1,5 @@
 package com.bogdevich.cafe.connectionpool;
 
-        import com.bogdevich.cafe.exception.ConnectionPoolException;
         import org.apache.logging.log4j.Level;
         import org.apache.logging.log4j.LogManager;
         import org.apache.logging.log4j.Logger;
@@ -32,7 +31,7 @@ public final class ConnectionPool {
         freeConnections = new ArrayBlockingQueue<>(connectionHelper.getPoolSize());
         busyConnections = new ArrayBlockingQueue<>(connectionHelper.getPoolSize());
         try {
-            for (int i=0; i<freeConnections.size(); i++){
+            for (int i=0; i<connectionHelper.getPoolSize(); i++){
                 ProxyConnection connection = new ProxyConnection(
                         DriverManager.getConnection(
                                 connectionHelper.getURL(),
@@ -41,44 +40,46 @@ public final class ConnectionPool {
                 );
                 freeConnections.add(connection);
             }
+
+            LOGGER.log(Level.INFO, "Connection pool has been initialised");
         } catch (SQLException ex) {
             LOGGER.log(Level.FATAL, "A database access error");
             throw new RuntimeException(ex);
         }
+
     }
 
-    public ProxyConnection takeConnection() throws ConnectionPoolException {
+    public ProxyConnection takeConnection() {
         try{
             ProxyConnection connection = freeConnections.take();
             busyConnections.add(connection);
+            LOGGER.log(Level.INFO, String.join(": ", "Connection was taken", String.valueOf(connection.hashCode())));
             return connection;
         } catch (InterruptedException ex) {
-            LOGGER.log(Level.ERROR, "Interrupted while waiting for connection");
-            throw new ConnectionPoolException(ex);
+            LOGGER.log(Level.ERROR, "Interrupted while waiting for connection", ex);
         }
+        return takeConnection();
     }
 
-    public void retrieveConnection(ProxyConnection connection) throws ConnectionPoolException{
+    void retrieveConnection(ProxyConnection connection) {
         if (busyConnections.remove(connection)) {
             freeConnections.add(connection);
+            LOGGER.log(Level.INFO, String.join(": ","Connection was retrieved", String.valueOf(connection.hashCode())));
         } else {
             LOGGER.log(Level.ERROR, "Trying to remove wild connection");
-            throw new ConnectionPoolException();
         }
     }
 
-    public void dispose() throws ConnectionPoolException{
+    public void dispose() {
         try {
             for (int i=0; i<freeConnections.size(); i++) {
-                freeConnections.take().close();
+                freeConnections.take().realClose();
             }
             LOGGER.log(Level.INFO, "Connections have been successfully closed");
         } catch (InterruptedException ex) {
-            LOGGER.log(Level.ERROR, "Interrupted while waiting for connection");
-            throw new ConnectionPoolException(ex);
+            LOGGER.log(Level.ERROR, "Interrupted while waiting for connection", ex);
         } catch (SQLException ex) {
-            LOGGER.log(Level.ERROR, "A database access error occurs while closing connection");
-            throw new ConnectionPoolException(ex);
+            LOGGER.log(Level.ERROR, "A database access error occurs while closing connection", ex);
         }
     }
 }

@@ -13,7 +13,7 @@ import static com.bogdevich.cafe.connectionpool.ConnectionParameter.*;
 /**
  * Created by Grodno on 24.07.2017.
  */
-class ConnectionInitializerHelper {
+final class ConnectionInitializerHelper {
     private static final Logger LOGGER = LogManager.getLogger(ConnectionInitializerHelper.class);
     private static final ConnectionInitializerHelper INSTANCE = new ConnectionInitializerHelper();
 
@@ -23,7 +23,7 @@ class ConnectionInitializerHelper {
 
     private final Properties connectionInfo;
 
-    private ConnectionInitializerHelper() throws RuntimeException {
+    private ConnectionInitializerHelper()  {
         connectionInfo = new Properties();
         try {
             ResourceBundle resourceBundle = ResourceBundle.getBundle(DB_PROPERTIES_PATH);
@@ -57,7 +57,7 @@ class ConnectionInitializerHelper {
 
     int getPoolSize() {
         try {
-            return Integer.parseInt(connectionInfo.getProperty(DB_URL));
+            return Integer.parseInt(connectionInfo.getProperty(DB_POOL_SIZE));
         } catch (NumberFormatException ex) {
             LOGGER.log(Level.ERROR, "The string in \"resourceBundle.getString(DB_POOL_SIZE)\" does not contain a parsable integer");
             return DB_DEFAULT_POOL_SIZE;
