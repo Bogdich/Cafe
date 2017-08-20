@@ -9,8 +9,17 @@ public final class ProxyConnection implements Connection {
 
     private Connection connection;
 
-    ProxyConnection(Connection connection){
+    ProxyConnection(Connection connection) {
         this.connection = connection;
+    }
+
+    void realClose() throws SQLException {
+        connection.close();
+    }
+
+    @Override
+    public void close() {
+        ConnectionPool.getInstance().retrieveConnection(this);
     }
 
     @Override
@@ -51,11 +60,6 @@ public final class ProxyConnection implements Connection {
     @Override
     public void rollback() throws SQLException {
         connection.rollback();
-    }
-
-    @Override
-    public void close() throws SQLException {
-        connection.close();
     }
 
     @Override
@@ -115,7 +119,7 @@ public final class ProxyConnection implements Connection {
 
     @Override
     public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
-        return connection.prepareStatement(sql,resultSetType, resultSetConcurrency);
+        return connection.prepareStatement(sql, resultSetType, resultSetConcurrency);
     }
 
     @Override
