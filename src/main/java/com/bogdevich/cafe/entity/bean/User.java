@@ -1,24 +1,24 @@
 package com.bogdevich.cafe.entity.bean;
 
 import com.bogdevich.cafe.entity.Entity;
-import com.bogdevich.cafe.entity.enums.Role;
+import com.bogdevich.cafe.entity.type.Role;
 
-import java.util.Objects;
+import java.math.BigDecimal;
 
-public class User extends Entity {
+public class User extends Entity{
     private String login;
     private String password;
-    private String email;
     private Role role;
+    private BigDecimal accountBalance;
 
     public User() {
     }
 
-    public User(String login, String password, String email, Role role) {
+    public User(String login, String password, Role role, BigDecimal accountBalance) {
         this.login = login;
         this.password = password;
-        this.email = email;
         this.role = role;
+        this.accountBalance = accountBalance;
     }
 
     public String getLogin() {
@@ -37,14 +37,6 @@ public class User extends Entity {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -53,32 +45,44 @@ public class User extends Entity {
         this.role = role;
     }
 
+    public BigDecimal getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(BigDecimal accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         User user = (User) o;
-        return Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(email, user.email) &&
-                role == user.role;
+
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (role != user.role) return false;
+        return accountBalance != null ? accountBalance.equals(user.accountBalance) : user.accountBalance == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, email, role);
+        int result = login != null ? login.hashCode() : 0;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (accountBalance != null ? accountBalance.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
-        sb.append("id=").append(id);
-        sb.append(", login='").append(login).append('\'');
+        sb.append("login='").append(login).append('\'');
         sb.append(", password='").append(password).append('\'');
-        sb.append(", email='").append(email).append('\'');
         sb.append(", role=").append(role);
+        sb.append(", accountBalance=").append(accountBalance);
         sb.append('}');
         return sb.toString();
     }
-
 }
