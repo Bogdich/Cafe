@@ -33,7 +33,8 @@ final class ConnectionInitializerHelper {
             connectionInfo.put(DB_PASSWORD, resourceBundle.getString(DB_PASSWORD));
             connectionInfo.put(DB_POOL_SIZE, resourceBundle.getString(DB_POOL_SIZE));
         } catch (ClassNotFoundException ex) {
-            LOGGER.log(Level.FATAL, "Class.forName(resourceBundle.getString(DB_DRIVER)): The class cannot be located");
+            LOGGER.log(Level.FATAL, "The class cannot be located");
+            throw new RuntimeException(ex);
         } catch (MissingResourceException ex) {
             LOGGER.log(Level.FATAL, "No resource bundle for the specified base name can be found");
             throw new RuntimeException(ex);
