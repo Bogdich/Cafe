@@ -4,8 +4,6 @@
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="/localization/lang" var="lang"/>
-<fmt:setBundle basename="/localization/message" var="message"/>
-
 <html>
 <head>
     <title>Registration</title>
@@ -38,7 +36,7 @@
 
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/jsp/template/header.jsp"/>
 
-<!-- Login form -->
+<!-- Registration form -->
 <main class="valign-wrapper" style="overflow: hidden">
     <!--<img class="" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;max-width: 100" src="../../img/img1.JPG">-->
     <div id="registration-form" class="container">
@@ -72,28 +70,63 @@
                             </label>
                         </div>
                     </div>
+                    <div class="row margin">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">lock</i>
+                            <input id="r-password-confirm" name="confirm-password" type="password" pattern="^.*$" minlength="4" maxlength="45" required class="validate">
+                            <label for="r-password-confirm">
+                                <fmt:message bundle="${lang}" key="form.confirm"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">phone_circle</i>
+                            <input id="number" name="number" type="text" pattern="^(25|29|33|44)[0-9]+$" minlength="9" maxlength="9" required class="validate">
+                            <label for="number">
+                                <fmt:message bundle="${lang}" key="form.number"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">home</i>
+                            <input id="street" name="street" type="text" pattern="^[A-Za-zА-Яа-я -.]$" minlength="4" maxlength="150" required class="validate">
+                            <label for="street">
+                                <fmt:message bundle="${lang}" key="form.street"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">home</i>
+                            <input id="house" name="house" type="text" pattern="^[1-9]{1,4}(\/[0-9]{1,2}$" minlength="4" maxlength="45" required class="validate">
+                            <label for="house">
+                                <fmt:message bundle="${lang}" key="form.house"/>
+                            </label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">home</i>
+                            <input id="flat" name="flat" type="text" pattern="^[1-9]([0-9]{1,3})?$" minlength="1" maxlength="4" required class="validate">
+                            <label for="flat">
+                                <fmt:message bundle="${lang}" key="form.flat"/>
+                            </label>
+                        </div>
+                    </div>
                     <c:if test="${errorMessage ne null}">
                         <article>
                             <fmt:message bundle="${message}" key="${errorMessage}"/>
                         </article>
                     </c:if>
-                    <div class="row margin">
-                        <div class="input-field col s12">
-                            <input id="checkbox" name="remember" type="checkbox">
-                            <label for="checkbox">
-                                <fmt:message bundle="${lang}" key="form.remember"/>
-                            </label>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input type="submit" class="btn waves-effect waves-green col s12" value="<fmt:message bundle="${lang}" key="navbar.signin"/>">
+                            <input type="submit" class="btn waves-effect waves-green col s12" value="<fmt:message bundle="${lang}" key="form.register"/>">
                         </div>
                         <div class="input-field col s12">
                             <p class="margin center">
-                                <fmt:message bundle="${lang}" key="form.donothaveaccount"/>
-                                <a href="${pageContext.request.contextPath}/controller?command=registration-page">
-                                    <fmt:message bundle="${lang}" key="form.registration"/>
+                                <fmt:message bundle="${lang}" key="form.haveaccount"/>
+                                <a href="${pageContext.request.contextPath}/controller?command=login-page">
+                                    <fmt:message bundle="${lang}" key="form.login"/>
                                 </a>
                             </p>
                         </div>
