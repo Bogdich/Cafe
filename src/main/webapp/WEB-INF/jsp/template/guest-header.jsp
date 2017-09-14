@@ -70,12 +70,6 @@
                     <fmt:message bundle="${lang}" key="form.remember"/>
                 </label>
             </div>
-            <div class="">
-                <br>
-                <article>${errorLoginPassMessage}</article>
-                <article>${wrongAction}</article>
-                <article>${nullPage}</article>
-            </div>
         </div>
         <div class="modal-footer">
             <button type="submit" class="modal-action waves-effect waves-green btn">

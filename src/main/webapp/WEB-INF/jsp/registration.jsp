@@ -4,6 +4,8 @@
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="/localization/lang" var="lang"/>
+<fmt:setBundle basename="/localization/message" var="message"/>
+
 <html>
 <head>
     <title>Registration</title>
@@ -54,7 +56,7 @@
                     <div class="row margin">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">account_circle</i>
-                            <input id="login" name="login" type="text" pattern="^[A-Za-zА-Яа-я]+$" minlength="4" maxlength="45" required class="validate">
+                            <input id="login" name="login" type="text" pattern="^[A-zА-я0-9 _-]$" minlength="4" maxlength="45" required class="validate">
                             <label for="login" data-error="">
                                 <fmt:message bundle="${lang}" key="form.login"/>
                             </label>
@@ -64,7 +66,7 @@
                     <div class="row margin">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">lock</i>
-                            <input id="password" name="password" type="password" pattern="^.*$" minlength="4" maxlength="45" required class="validate">
+                            <input id="password" name="password" type="password" pattern="^.*$" minlength="4" maxlength="150" required class="validate">
                             <label for="password">
                                 <fmt:message bundle="${lang}" key="form.password"/>
                             </label>
@@ -73,7 +75,7 @@
                     <div class="row margin">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">lock</i>
-                            <input id="r-password-confirm" name="confirm-password" type="password" pattern="^.*$" minlength="4" maxlength="45" required class="validate">
+                            <input id="r-password-confirm" name="confirm-password" type="password" pattern="^.*$" minlength="4" maxlength="150" required class="validate">
                             <label for="r-password-confirm">
                                 <fmt:message bundle="${lang}" key="form.confirm"/>
                             </label>
@@ -82,7 +84,7 @@
                     <div class="row margin">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">phone_circle</i>
-                            <input id="number" name="number" type="text" pattern="^(25|29|33|44)[0-9]+$" minlength="9" maxlength="9" required class="validate">
+                            <input id="number" name="number" type="text" pattern="^(25|29|33|44)[0-9]*$" minlength="9" maxlength="9" required class="validate">
                             <label for="number">
                                 <fmt:message bundle="${lang}" key="form.number"/>
                             </label>
@@ -91,7 +93,7 @@
                     <div class="row margin">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">home</i>
-                            <input id="street" name="street" type="text" pattern="^[A-Za-zА-Яа-я -.]$" minlength="4" maxlength="150" required class="validate">
+                            <input id="street" name="street" type="text" pattern="^[A-zА-я0-9 -]$" minlength="4" maxlength="150" required class="validate">
                             <label for="street">
                                 <fmt:message bundle="${lang}" key="form.street"/>
                             </label>
@@ -100,27 +102,27 @@
                     <div class="row margin">
                         <div class="input-field col s6">
                             <i class="material-icons prefix">home</i>
-                            <input id="house" name="house" type="text" pattern="^[1-9]{1,4}(\/[0-9]{1,2}$" minlength="4" maxlength="45" required class="validate">
+                            <input id="house" name="house" type="text" pattern="^[1-9][0-9]{0,2}(\/[0-9]{1,2})?$" required class="validate">
                             <label for="house">
                                 <fmt:message bundle="${lang}" key="form.house"/>
                             </label>
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix">home</i>
-                            <input id="flat" name="flat" type="text" pattern="^[1-9]([0-9]{1,3})?$" minlength="1" maxlength="4" required class="validate">
+                            <input id="flat" name="flat" type="text" pattern="^[1-9]([0-9]{1,3})?$" required class="validate">
                             <label for="flat">
                                 <fmt:message bundle="${lang}" key="form.flat"/>
                             </label>
                         </div>
                     </div>
-                    <c:if test="${errorMessage ne null}">
-                        <article>
-                            <fmt:message bundle="${message}" key="${errorMessage}"/>
+                    <c:if test="${requestScope.errorMessage ne null}">
+                        <article class="red-text text-lighten-1">
+                            <fmt:message bundle="${message}" key="${requestScope.errorMessage}"/>
                         </article>
                     </c:if>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input type="submit" class="btn waves-effect waves-green col s12" value="<fmt:message bundle="${lang}" key="form.register"/>">
+                            <button type="submit" class="btn waves-effect waves-green col s12"><fmt:message bundle="${lang}" key="form.register"/></button>
                         </div>
                         <div class="input-field col s12">
                             <p class="margin center">

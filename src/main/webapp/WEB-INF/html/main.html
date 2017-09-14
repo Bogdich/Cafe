@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Main page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta login="viewport" content="width=device-width, initial-scale=1"/>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../../materialize/css/materialize.min.css" media="screen,projection"/>
+</head>
+<style>
+    body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1 0 auto;
+    }
+    /* хром, сафари */
+    body::-webkit-scrollbar { width: 0; }
+
+    /* ie 10+ */
+    body { -ms-overflow-style: none; }
+
+    /* фф (свойство больше не работает, других способов тоже нет)*/
+    body { overflow: -moz-scrollbars-none; }
+</style>
+<body>
+<div class="navbar-fixed">
+    <nav class="blue-grey darken-3">
+        <div class="nav-wrapper container">
+                <a href="#" class="brand-logo">Logo</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="">About</a></li>
+                    <li><a href="">Menu</a></li>
+                    <li><a href="">Contact</a></li>
+                    <li><a id="shopping-cart" class="" href="" data-activates="slide-out"><i class="white-text material-icons">add_shopping_cart</i></a></li>
+                    <li><a class="dropdown-button" data-activates="dropdown-lang"><i class="material-icons">language</i></a></li>
+                    <li>
+                        <ul id="dropdown-lang" class="dropdown-content">
+                            <li><a class="">EN</a></li>
+                            <li><a class="">RU</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="waves-effect waves-light btn" href="#login-form">Sign in</a></li>
+                    <li><a class="waves-effect waves-light btn" href="#registration-form">Sign up</a></li>
+                </ul>
+                <ul id="nav-mobile" class="side-nav">
+                    <li><a href="">About</a></li>
+                    <li><a href="">Menu</a></li>
+                    <li><a href="">Contact</a></li>
+                    <li><a class="" href="" ><i class="material-icons">add_shopping_cart</i></a></li>
+                    <li><a class=""><i class="material-icons">language</i></a></li>
+                    <li><a class="waves-effect waves-light btn" href="#form">Sign in</a></li>
+                    <!--<li><form action="/controller">-->
+                    <!--<input type="hidden" login="command" value="login-page">-->
+                    <!--<button type="submit" class="waves-effect waves-light btn" value="LOGIN"></button>-->
+                    <!--</form></li>-->
+                </ul>
+                <a href="#" data-activates="nav-mobile" class="button-collapse right"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+</div>
+<!-- Order products -->
+<ul id="slide-out" class="side-nav">
+    <li><a href="#!">First Sidebar Link</a></li>
+    <li><a href="#!">Second Sidebar Link</a></li>
+</ul>
+<!-- Modal Structure -->
+<div id="login-form" class="modal" style="width: 50vh;">
+        <form id="sign-in" style="overflow: hidden" login="loginForm" action="/controller" method="post">
+            <input type="hidden" login="command" value="login"/>
+            <div class="modal-content">
+                <div class="input-field">
+                    <i class="material-icons prefix">phone_circle</i>
+                    <input id="l-number" login="number" type="text" pattern="^(25|29|33|44)[0-9]+$" minlength="9" maxlength="9" required class="validate">
+                    <label for="l-number" data-error="">Number</label>
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix">lock</i>
+                    <input id="l-password" login="password" type="password" pattern="^.*$" minlength="4" maxlength="45" required class="validate">
+                    <label for="l-password">Password</label>
+                </div>
+                <div class="input-field">
+                    <input id="l-checkbox" name="remember" type="checkbox"/>
+                    <label for="l-checkbox">Remember me</label>
+                </div>
+                <div class="">
+                    <br>
+                    <article>${errorLoginPassMessage}</article>
+                    <article>${wrongAction}</article>
+                    <article>${nullPage}</article>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="modal-action waves-effect waves-green btn">Sign in</button>
+            </div>
+        </form>
+</div>
+
+<div id="registration-form" class="modal" style="width: 50vh;">
+    <form id="sign-up" style="overflow: hidden" name="registrationForm" action="/controller" method="post">
+        <input type="hidden" name="command" value="registration"/>
+        <div class="modal-content">
+            <div class="input-field">
+                <i class="material-icons prefix">phone_circle</i>
+                <input id="r-number" name="number" type="text" pattern="^(25|29|33|44)[0-9]+$" minlength="9" maxlength="9" required class="validate">
+                <label for="r-number" data-error="XX-XXXXXXX">Number</label>
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">lock</i>
+                <input id="r-password" name="password" type="password" pattern="^.*$" minlength="4" maxlength="45" required class="validate">
+                <label for="r-password">Password</label>
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">lock</i>
+                <input id="r-password-confirm" name="confirm-password" type="password" pattern="^.*$" minlength="4" maxlength="45" required class="validate">
+                <label for="r-password-confirm">Password</label>
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="r-login" name="login" type="text" pattern="^[A-Za-zА-Яа-я]+$" minlength="4" maxlength="45" required class="validate">
+                <label for="r-login" data-error="">Name</label>
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="r-street" name="street" type="text" pattern="^[A-Za-zА-Яа-я_ ]+$" minlength="2" maxlength="45" required class="validate">
+                <label for="r-street" data-error="">Street</label>
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="r-house" name="house" type="text" pattern="^[0-9]+(\/[0-9])*$" maxlength="" required class="validate">
+                <label for="r-house" data-error="">House</label>
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="r-flat" name="house" type="number" pattern="^[0-9]+(\/[0-9])*$" minlength="4" maxlength="45" required class="validate">
+                <label for="r-flat" data-error="">Flat</label>
+            </div>
+            <div class="input-field">
+                <input id="r-checkbox" name="remember" type="checkbox"/>
+                <label for="r-checkbox">Remember me</label>
+            </div>
+            <div class="">
+                <br>
+                <article>${errorLoginPassMessage}</article>
+                <article>${wrongAction}</article>
+                <article>${nullPage}</article>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" class="modal-action waves-effect waves-green btn" value="Sign in">
+            <input type="submit" class="modal-action waves-effect waves-green btn" value="Sign in">
+        </div>
+    </form>
+</div>
+
+
+
+
+<main>
+<div class="carousel carousel-slider center" style="min-height: 90vh" data-indicators="true">
+    <div class="carousel-fixed-item center">
+        <a class="btn waves-effect white grey-text darken-text-2">button</a>
+    </div>
+    <div class="carousel-item red white-text" href="#one!">
+        <h2>First Panel</h2>
+        <p class="white-text">This is your first panel</p>
+    </div>
+    <div class="carousel-item amber white-text" href="#two!">
+        <h2>Second Panel</h2>
+        <p class="white-text">This is your second panel</p>
+    </div>
+    <div class="carousel-item green white-text" href="#three!">
+        <h2>Third Panel</h2>
+        <p class="white-text">This is your third panel</p>
+    </div>
+    <div class="carousel-item blue white-text" href="#four!">
+        <h2>Fourth Panel</h2>
+        <p class="white-text">This is your fourth panel</p>
+    </div>
+</div>
+</main>
+
+<footer class="page-footer blue-grey darken-3">
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+            <!--<div class="col l6 s12">-->
+                <!--<h5 class="white-text">Footer Content</h5>-->
+                <!--<p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>-->
+            <!--</div>-->
+            <!--<div class="col l4 offset-l2 s12">-->
+                <!--<h5 class="white-text">Links</h5>-->
+                <!--<ul>-->
+                    <!--<li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>-->
+                    <!--<li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>-->
+                    <!--<li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>-->
+                    <!--<li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="footer-copyright">
+        <div class="container">
+            © 2017 Bogdevich Eugene
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+    </div>
+</footer>
+
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
+<script type="text/javascript" src="../../materialize/js/materialize.min.js"></script>
+
+<script type="text/javascript">
+    $( document ).ready(function(){
+        $(".button-collapse").sideNav();
+        $("#shopping-cart").sideNav({
+            edge: 'right'
+        });
+        $('.carousel.carousel-slider').carousel({fullWidth: true});
+        $('.modal').modal();
+        $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: false, // Does not change width of dropdown to that of the activator
+                hover: true, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: true, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: false // Stops event propagation
+            }
+        );
+
+//        $('#sign-in').validate({
+//            rules: {
+//                number: {
+//                    required: true,
+//                    minlength: 9,
+//                    maxlength: 9,
+//                    pattern: /^(29|33|44)[0-9]*$/
+//                }
+//            },
+//            messages: {
+//                number: {
+//                    required: "error1",
+//                    minlength: "error2",
+//                    maxlength: "error3",
+//                    pattern: "error4"
+//                }
+//            },
+//            errorClass : "invalid",
+//            errorPlacement: function (error, element) {
+////                if (element.attribute('login') === 'number') {
+////                    element.data('wrong', error)
+////                }
+//                console.log(error[0].outerText);
+////                console.log($(element[0]).next()[0]);
+//                $($(element[0]).next()[0]).attr('data-error', error[0].outerText);
+//
+////                $($(element[0]).next()[0]).attr('class', "invalid");
+//            }
+//        });
+    })
+</script>
+</body>
+</html>

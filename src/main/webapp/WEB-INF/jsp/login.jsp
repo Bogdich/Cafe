@@ -49,7 +49,7 @@
                     <div class="row margin">
                         <div class="input-field col s12 center">
                             <h4 class="blue-grey-text text-darken-2">
-                                <fmt:message bundle="${lang}" key="form.registration"/>
+                                <fmt:message bundle="${lang}" key="form.authorization"/>
                             </h4>
                         </div>
                     </div>
@@ -72,22 +72,22 @@
                             </label>
                         </div>
                     </div>
-                    <c:if test="${errorMessage ne null}">
-                        <article>
-                            <fmt:message bundle="${message}" key="${errorMessage}"/>
-                        </article>
-                    </c:if>
                     <div class="row margin">
                         <div class="input-field col s12">
-                            <input id="checkbox" name="remember" type="checkbox">
+                            <input id="checkbox" name="remember" type="checkbox"/>
                             <label for="checkbox">
                                 <fmt:message bundle="${lang}" key="form.remember"/>
                             </label>
                         </div>
                     </div>
+                    <c:if test="${requestScope.errorMessage ne null}">
+                        <article class="red-text text-lighten-1">
+                            <fmt:message bundle="${message}" key="${requestScope.errorMessage}"/>
+                        </article>
+                    </c:if>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input type="submit" class="btn waves-effect waves-green col s12" value="<fmt:message bundle="${lang}" key="navbar.signin"/>">
+                            <button type="submit" class="btn waves-effect waves-green col s12"><fmt:message bundle="${lang}" key="navbar.signin"/></button>
                         </div>
                         <div class="input-field col s12">
                             <p class="margin center">
