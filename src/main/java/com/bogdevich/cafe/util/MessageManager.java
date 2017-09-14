@@ -1,7 +1,5 @@
 package com.bogdevich.cafe.util;
 
-import com.bogdevich.cafe.constant.JavaServerPagePath;
-
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -20,6 +18,12 @@ public final class MessageManager {
         return MessageManagerHolder.MESSAGE_MANAGER;
     }
 
+    /**
+     *
+     * @param key
+     * @param languageTag
+     * @return
+     */
     public String getMessage(String key, String languageTag) {
         return ResourceBundle
                 .getBundle(BASE_NAME, Locale.forLanguageTag(languageTag))

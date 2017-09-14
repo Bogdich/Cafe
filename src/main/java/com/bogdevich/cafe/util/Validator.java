@@ -13,7 +13,7 @@ public class Validator {
     private static final String LOGIN_REGEX = "^[A-zА-я0-9 _-]{4,45}$";
     private static final String PASSWORD_REGEX = "^.{4,150}$";
     private static final String NUMBER_REGEX = "^(25|29|33|44)[0-9]{7}$";
-    private static final String STREET_REGEX = "^[A-zА-я0-9 -]{4,45}$";
+    private static final String STREET_REGEX = "^[A-zА-я0-9 -]{4,150}$";
     private static final String HOUSE_REGEX = "^[1-9][0-9]{0,2}(\\/[0-9]{1,2})?$";
     private static final String FLAT_REGEX = "^[1-9]([0-9]{1,3})?$";
     private static final String DISH_NAME_REGEX = "^[A-zА-я -]{4,45}$";
