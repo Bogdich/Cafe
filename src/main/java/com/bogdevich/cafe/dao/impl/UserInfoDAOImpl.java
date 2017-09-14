@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.bogdevich.cafe.constant.RBErrorMessage.DAOMessage.*;
+import static com.bogdevich.cafe.constant.ErrorMessage.DAOExceptionMessage.USER_FIND_BY_ID;
 
 public class UserInfoDAOImpl implements UserInfoDAO {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -73,7 +73,7 @@ public class UserInfoDAOImpl implements UserInfoDAO {
             }
         } catch (SQLException ex) {
             LOGGER.log(Level.ERROR, ex.getMessage());
-            throw new DAOException(ADDRES_FIND_ALL, ex);
+            throw new DAOException(ex);
         }
         return userinfos;
     }
@@ -90,7 +90,7 @@ public class UserInfoDAOImpl implements UserInfoDAO {
             }
             return userinfos;
         } catch (SQLException ex) {
-            throw new DAOException(ADDRESS_FIND_BY, ex);
+            throw new DAOException(ex);
         }
     }
 

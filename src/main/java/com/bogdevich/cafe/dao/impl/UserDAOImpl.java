@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.bogdevich.cafe.constant.RBErrorMessage.DAOMessage.*;
+import static com.bogdevich.cafe.constant.ErrorMessage.DAOExceptionMessage.*;
 
 public class UserDAOImpl implements UserDAO {
     private static final Logger LOGGER = LogManager.getLogger();
