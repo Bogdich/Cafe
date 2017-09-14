@@ -10,9 +10,6 @@ import java.util.ResourceBundle;
 
 import static com.bogdevich.cafe.connectionpool.ConnectionParameter.*;
 
-/**
- * Created by Grodno on 24.07.2017.
- */
 final class ConnectionInitializerHelper {
     private static final Logger LOGGER = LogManager.getLogger(ConnectionInitializerHelper.class);
     private static final ConnectionInitializerHelper INSTANCE = new ConnectionInitializerHelper();

@@ -7,33 +7,15 @@ import java.util.concurrent.Executor;
 
 public final class ProxyConnection implements Connection {
 
-    /**
-     * Connection ID number.
-     * Must be deleted.
-     */
-    private int id;
     private Connection connection;
 
     ProxyConnection(Connection connection) {
         this.connection = connection;
     }
 
-    ProxyConnection(Connection connection, int id) {
-        this.connection = connection;
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    void realClose() throws SQLException {
-        connection.close();
-    }
-
     @Override
-    public void close() {
-        ConnectionPool.getInstance().retrieveConnection(this);
+    public void close() throws SQLException {
+        connection.close();
     }
 
     @Override

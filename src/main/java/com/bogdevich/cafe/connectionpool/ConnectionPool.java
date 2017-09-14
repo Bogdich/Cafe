@@ -10,9 +10,6 @@ import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-/**
- * Created by Grodno on 23.07.2017.
- */
 public final class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
@@ -37,8 +34,7 @@ public final class ConnectionPool {
                         DriverManager.getConnection(
                                 connectionHelper.getURL(),
                                 connectionHelper.getInfo()
-                        ),
-                        i + 1
+                        )
                 );
                 freeConnections.add(connection);
             }
@@ -57,7 +53,7 @@ public final class ConnectionPool {
         try {
             connection = freeConnections.take();
             busyConnections.add(connection);
-            LOGGER.log(Level.DEBUG, String.join(": ", "Connection was taken, id", String.valueOf(connection.getId())));
+            LOGGER.log(Level.DEBUG, "Connection was taken");
             return connection;
         } catch (InterruptedException ex) {
             LOGGER.log(Level.ERROR, "Interrupted while waiting for connection", ex);
@@ -70,11 +66,11 @@ public final class ConnectionPool {
             ProxyConnection proxyConnection = (ProxyConnection) connection;
             if (busyConnections.remove(proxyConnection)) {
                 freeConnections.add(proxyConnection);
-                LOGGER.log(Level.DEBUG, String.join(": ", "Connection was retrieved, id", String.valueOf(proxyConnection.getId())));
+                LOGGER.log(Level.DEBUG, "Connection was retrieved");
             } else if (freeConnections.contains(connection)) {
-                LOGGER.log(Level.DEBUG, String.join(": ", "Connection has been already retrieved", String.valueOf(proxyConnection.getId())));
+                LOGGER.log(Level.DEBUG, "Connection has been already retrieved");
             } else {
-                LOGGER.log(Level.DEBUG, String.join(": ", "Trying to retrieve wild connection", String.valueOf(proxyConnection.getId())));
+                LOGGER.log(Level.DEBUG, "Trying to retrieve wild connection");
             }
         } else {
             LOGGER.log(Level.WARN, "Trying to retrieve wild connection");
@@ -84,7 +80,7 @@ public final class ConnectionPool {
     public void dispose() {
         try {
             for (int i = 0; i < freeConnections.size(); i++) {
-                freeConnections.take().realClose();
+                freeConnections.take().close();
             }
             LOGGER.log(Level.INFO, "Connections have been successfully closed");
         } catch (InterruptedException ex) {
