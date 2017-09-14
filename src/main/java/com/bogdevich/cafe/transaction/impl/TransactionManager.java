@@ -6,6 +6,7 @@ import com.bogdevich.cafe.exception.TransactionException;
 import com.bogdevich.cafe.transaction.IDataSource;
 import com.bogdevich.cafe.transaction.ITransactionManager;
 import com.bogdevich.cafe.transaction.function.ExecutableTransaction;
+import org.apache.logging.log4j.Level;
 
 import java.sql.Connection;
 import java.util.Optional;
@@ -41,6 +42,7 @@ public class TransactionManager implements ITransactionManager, IDataSource {
             setAutoCommit(connection, false);
             result = unit.execute();
             commit(connection);
+            LOGGER.log(Level.DEBUG, "Returned result: "+result.toString());
             return result;
         } catch (DAOException ex) {
             rollback(connection);
@@ -51,16 +53,6 @@ public class TransactionManager implements ITransactionManager, IDataSource {
             pool.retrieveConnection(connection);
         }
     }
-
-/*    @Override
-    public void executeWithoutTransaction(ExecutableTransaction unit) throws DAOException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.takeConnection();
-        CONNECTION_THREAD_LOCAL.set(connection);
-        unit.execute(object, objects);
-        CONNECTION_THREAD_LOCAL.remove();
-        pool.retrieveConnection(connection);
-    }*/
 
     /**
      *
