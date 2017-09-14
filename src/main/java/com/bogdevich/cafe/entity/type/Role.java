@@ -1,4 +1,4 @@
-package com.bogdevich.cafe.entity.enums;
+package com.bogdevich.cafe.entity.type;
 
 public enum Role {
     ADMIN(1),
