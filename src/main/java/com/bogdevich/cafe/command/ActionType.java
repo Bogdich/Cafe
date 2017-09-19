@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashSet;
 
 public enum ActionType {
@@ -58,11 +59,11 @@ public enum ActionType {
             Role.GUEST
     );
 
-    private static final Logger LOGGER = LogManager.getLogger();
+
 
     private Command command;
     private String actionName;
-    private HashSet<Role> roles = new HashSet<>();
+    private EnumSet<Role> roles = EnumSet.allOf(Role.class);
 
     ActionType(String actionName, Command command, Role... roles) {
         this.actionName = actionName;
@@ -83,7 +84,6 @@ public enum ActionType {
     public static ActionType defineActionType(String actionName){
         for (ActionType type : ActionType.values()) {
             if (type.actionName.equalsIgnoreCase(actionName)) {
-                LOGGER.log(Level.DEBUG, "Returned ActionType: ["+type.name()+"]");
                 return type;
             }
         }
