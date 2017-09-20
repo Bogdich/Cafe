@@ -10,5 +10,5 @@ public interface ExecutableTransaction<T> {
      * @return
      * @throws DAOException
      */
-    T execute() throws DAOException;
+    T perform() throws DAOException;
 }
