@@ -14,7 +14,7 @@ import java.util.Optional;
 public class TransactionManager implements ITransactionManager, IDataSource {
     private static final TransactionManager TRANSACTION_MANAGER = new TransactionManager();
     /**
-     *
+     * The field guarantees that every thread has its own exemplar of connection.
      */
     private static final ThreadLocal<Connection> CONNECTION_THREAD_LOCAL = new ThreadLocal<>();
 
@@ -26,11 +26,12 @@ public class TransactionManager implements ITransactionManager, IDataSource {
     }
 
     /**
-     *
-     * @param unit
-     * @param <T>
-     * @return
-     * @throws TransactionException
+     * Current thread gets its own connection from @<code>ConnectionPool</code>.
+     * The transaction occurs after the @<code>unit.perform()</code> is invoked.
+     * @param unit  An exemplar of anonymous class or lambda expression.
+     * @param <T>   Anonymous function returned type.
+     * @return  Generic returned type.
+     * @throws TransactionException When DAOException occurs.
      */
     @Override
     public <T> T executeInTransaction(ExecutableTransaction<T> unit) throws TransactionException {
@@ -40,7 +41,7 @@ public class TransactionManager implements ITransactionManager, IDataSource {
         T result;
         try {
             setAutoCommit(connection, false);
-            result = unit.execute();
+            result = unit.perform();
             commit(connection);
             LOGGER.log(Level.DEBUG, "Returned result: "+result.toString());
             return result;
