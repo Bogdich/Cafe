@@ -18,7 +18,7 @@ import static com.bogdevich.cafe.constant.ErrorMessage.DAOExceptionMessage.USER_
 public class UserInfoDAOImpl implements UserInfoDAO {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static final String SQL_INSERT = "INSERT INTO user_info (`number`, `street`, `house_number`, `flat`, `user_id`) VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO `user_info` (`number`, `street`, `house_number`, `flat`, `user_id`) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_SELECT_ALL = "SELECT `id`, `number`, `street`, `house_number`, `flat`, `user_id` FROM user_info";
     private static final String SQL_SELECT_BY_ID = "SELECT `id`,`number`, `street`, `house_number`, `flat`, `user_id` FROM user_info WHERE `id`=?";
     private static final String SQL_SELECT_BY_USER_ID = "SELECT `id`, `number`, `street`, `house_number`, `flat`, `user_id` FROM user_info WHERE `user_id`=?";
@@ -56,10 +56,10 @@ public class UserInfoDAOImpl implements UserInfoDAO {
                 LOGGER.log(Level.WARN, "Can not create userinfo");
                 throw new DAOException();
             }
-            return Optional.ofNullable(userinfo);
         } catch (SQLException ex) {
             throw new DAOException(ex);
         }
+        return Optional.ofNullable(userinfo);
     }
 
     @Override

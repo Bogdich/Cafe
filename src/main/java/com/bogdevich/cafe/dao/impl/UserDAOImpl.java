@@ -21,11 +21,11 @@ public class UserDAOImpl implements UserDAO {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String SQL_SELECT_ALL_USERS = "SELECT `id`, `login`, `password`, `account_balance`, `role_id` FROM user";
-    private static final String SQL_CREATE = "INSERT INTO user(`login`, `password`, `account_balance`, `role_id`) VALUES(?,?,?,?)";
+    private static final String SQL_CREATE = "INSERT INTO `user`(`login`, `password`, `account_balance`, `role_id`) VALUES(?,?,?,?)";
     private static final String SQL_SELECT_BY_LOGIN = "SELECT `id`, `login`, `password`, `account_balance`, `role_id` FROM user WHERE `login`=?";
     private static final String SQL_SELECT_BY_ID = "SELECT `id`, `login`, `password`, `account_balance`, `role_id` FROM user WHERE `id`=?";
     private static final String SQL_UPDATE_USER = "UPDATE user SET `login`=?, `password`=?, `account_balance`=?, `role_id`=? WHERE `id`=?";
-    private static final String SQL_DELETE_BY_NUMBER = "DELETE FROM user WHERE `number`=?";
+    private static final String SQL_DELETE_BY_NUMBER = "DELETE FROM `user` WHERE `number`=?";
 
     private final IDataSource dataSource;
 
