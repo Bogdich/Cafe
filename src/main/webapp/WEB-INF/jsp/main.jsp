@@ -12,26 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/materialize/css/materialize.min.css" media="screen,projection"/>
-    <style>
-        body {
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-        main {
-            flex: 1 0 auto;
-        }
-
-        /* хром, сафари */
-        body::-webkit-scrollbar { width: 0; }
-
-        /* ie 10+ */
-        body { -ms-overflow-style: none; }
-
-        /* фф (свойство больше не работает, других способов тоже нет)*/
-        body { overflow: -moz-scrollbars-none; }
-
-    </style>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/materialize/css/style.css" media="screen,projection"/>
 </head>
 <body>
 
@@ -70,57 +51,6 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}materialize/js/materialize.min.js"></script>
-
-<script type="text/javascript">
-    $( document ).ready(function(){
-        $(".button-collapse").sideNav();
-        $("#shopping-cart").sideNav({
-            edge: 'right'
-        });
-        $('.carousel.carousel-slider').carousel({fullWidth: true});
-        $('.modal').modal();
-        $('.dropdown-button').dropdown({
-                inDuration: 300,
-                outDuration: 225,
-                constrainWidth: false, // Does not change width of dropdown to that of the activator
-                hover: true, // Activate on hover
-                gutter: 0, // Spacing from edge
-                belowOrigin: true, // Displays dropdown below the button
-                alignment: 'left', // Displays dropdown with edge aligned to the left of button
-                stopPropagation: false // Stops event propagation
-            }
-        );
-
-//        $('#sign-in').validate({
-//            rules: {
-//                number: {
-//                    required: true,
-//                    minlength: 9,
-//                    maxlength: 9,
-//                    pattern: /^(29|33|44)[0-9]*$/
-//                }
-//            },
-//            messages: {
-//                number: {
-//                    required: "error1",
-//                    minlength: "error2",
-//                    maxlength: "error3",
-//                    pattern: "error4"
-//                }
-//            },
-//            errorClass : "invalid",
-//            errorPlacement: function (error, element) {
-////                if (element.attribute('login') === 'number') {
-////                    element.data('wrong', error)
-////                }
-//                console.log(error[0].outerText);
-////                console.log($(element[0]).next()[0]);
-//                $($(element[0]).next()[0]).attr('data-error', error[0].outerText);
-//
-////                $($(element[0]).next()[0]).attr('class', "invalid");
-//            }
-//        });
-    })
-</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}materialize/js/main.js"></script>
 </body>
 </html>

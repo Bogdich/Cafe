@@ -8,18 +8,18 @@
                 <li><a href="${pageContext.request.contextPath}/controller?command=main-page">
                     <fmt:message bundle="${lang}" key="navbar.main"/>
                 </a></li>
-                <li><a href="">
+                <li><a href="${pageContext.request.contextPath}/controller?command=menu-page">
                     <fmt:message bundle="${lang}" key="navbar.menu"/>
                 </a></li>
                 <li><a href="">
                     <fmt:message bundle="${lang}" key="navbar.contact"/>
                 </a></li>
-                <li><a id="shopping-cart" class="" href="" data-activates="slide-out"><i class="white-text material-icons">add_shopping_cart</i></a></li>
+                <li><a id="shopping-cart" class="" href="" data-activates="shopping-cart-div"><i class="white-text material-icons">add_shopping_cart</i></a></li>
                 <li><a class="dropdown-button" data-activates="dropdown-lang"><i class="material-icons">language</i></a></li>
                 <li>
                     <ul id="dropdown-lang" class="dropdown-content">
-                        <li><a href="${pageContext.request.contextPath}/controller?command=change-language&lang=en_EN" class="">EN</a></li>
-                        <li><a href="${pageContext.request.contextPath}/controller?command=change-language&lang=ru_RU" class="">RU</a></li>
+                        <li><a href="${pageContext.request.contextPath}/controller?command=change-language&lang=en-EN" class="">EN</a></li>
+                        <li><a href="${pageContext.request.contextPath}/controller?command=change-language&lang=ru-RU" class="">RU</a></li>
                     </ul>
                 </li>
                 <li><a class="waves-effect waves-light btn" href="#login-form">
@@ -38,12 +38,6 @@
         </div>
     </nav>
 </div>
-
-<!-- Order products -->
-<ul id="slide-out" class="side-nav">
-    <li><a href="#!">First Sidebar Link</a></li>
-    <li><a href="#!">Second Sidebar Link</a></li>
-</ul>
 
 <!-- Modal Structure -->
 <div id="login-form" class="modal" style="width: 50vh;">

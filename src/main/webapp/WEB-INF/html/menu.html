@@ -3,11 +3,11 @@
 <head>
     <title>Menu</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta login="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="../../static/materialize/css/materialize.min.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../../materialize/css/materialize.min.css" media="screen,projection"/>
 </head>
 <style>
     body {
@@ -19,6 +19,14 @@
     main {
         flex: 1 0 auto;
     }
+    /* хром, сафари */
+    body::-webkit-scrollbar { width: 0; }
+
+    /* ie 10+ */
+    body { -ms-overflow-style: none; }
+
+    /* фф (свойство больше не работает, других способов тоже нет)*/
+    body { overflow: -moz-scrollbars-none; }
 </style>
 
 <body>
@@ -62,21 +70,21 @@
 </ul>
 <!-- Modal Structure -->
 <div id="form" class="modal" style="width: 50vh;">
-    <form id="sign-in" style="overflow: hidden" login="loginForm" action="/controller" method="post">
-        <input type="hidden" login="command" value="login"/>
+    <form id="sign-in" style="overflow: hidden" name="loginForm" action="/controller" method="post">
+        <input type="hidden" name="command" value="login"/>
         <div class="modal-content">
             <div class="input-field">
                 <i class="material-icons prefix">account_circle</i>
-                <input id="number" login="number" type="text" pattern="^(25|29|33|44)[0-9]+$" minlength="9" maxlength="9" required class="validate">
+                <input id="number" name="number" type="text" pattern="^(25|29|33|44)[0-9]+$" minlength="9" maxlength="9" required class="validate">
                 <label for="number" data-error="">Number</label>
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">lock</i>
-                <input id="password" login="password" type="password" pattern="^.*$" minlength="4" maxlength="45" required class="validate">
+                <input id="password" name="password" type="password" pattern="^.*$" minlength="4" maxlength="45" required class="validate">
                 <label for="password">Password</label>
             </div>
             <div class="input-field">
-                <input id="checkbox" login="remember" type="checkbox"/>
+                <input id="checkbox" name="remember" type="checkbox"/>
                 <label for="checkbox">Remember me</label>
             </div>
             <div class="">
@@ -96,19 +104,67 @@
 <div id="menu" class="row">
     <div class="col s12">
         <ul class="tabs tabs-transparent tabs-fixed-width">
-            <li class="tab col m3 s12"><a class="blue-grey-text darken-3" href="#voted">Votes</a></li>
-            <li class="tab col m3 s12"><a class="blue-grey-text darken-3" href="#posts">Posts</a></li>
-            <li class="tab col m3 s12"><a class="blue-grey-text darken-3" href="#followers">Followers</a></li>
-            <li class="tab col m3 s12"><a class="blue-grey-text darken-3" href="#following">Following</a></li>
+            <li class="tab col m3 s12"><a class="blue-grey-text darken-3 menu" href="#voted">Бургеры</a></li>
+            <li class="tab col m3 s12"><a class="blue-grey-text darken-3" href="#posts">Твистеры</a></li>
+            <li class="tab col m3 s12"><a class="blue-grey-text darken-3 menu" href="#followers">Блинчики</a></li>
+            <li class="tab col m3 s12"><a class="blue-grey-text darken-3" href="#following">Напитки</a></li>
+            <li class="tab col m3 s12"><a class="blue-grey-text darken-3" href="#other">Другое</a></li>
             <div class="indicator blue-grey" style="z-index:1"></div>
         </ul>
     </div>
-    <div id="voted" class="col s12 right-align">
+    <div id="voted" class="col s12 right-align menu">
         <h4 class="right grey lighten-1 black-text text-lighten-1" title="Votes">&nbsp; +120 &nbsp;<a href="#" class="right green waves-effect white-text" id="btnVoteUp">&nbsp;<i class="mdi-social-plus-one small"></i>&nbsp;</a></h4>
     </div>
-    <div id="posts" class="col s12">Test 2</div>
-    <div id="followers" class="col s12">Test 3</div>
-    <div id="following" class="col s12">Test 4</div>
+    <div id="posts" datafld="" class="col s12 category">Test 2</div>
+    <div id="followers" class="col s12 category">Test 3</div>
+    <div id="following" class="col s12">
+
+        <div class="row">
+            <section class="col s0" style="width:5.5555555556%;margin-left:auto;left:auto;right:auto"></section>
+            <div class="col s12 m5">
+                <div class="card">
+                    <div class="card-image">
+                        <div class="waves-effect waves-block waves-light">
+                            <img class="activator" src="../../img/Чикенбургер.png" onerror="this.src='../../img/'">
+                        </div>
+                        <button class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></button>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4"><strong>Чикенбургер</strong></span>
+                        <span>5,60 BYN</span>
+                        <button class="activator btn-flat right">Описание</button>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4"><strong>Чикенбургер</strong><i class="material-icons right">close</i></span>
+                        <p>I am a very simple card. I am good at containing small bits of information.I am convenient because I require little markup to use effectively.
+                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                        <p><span><strong>400</strong> грамм</span></p>
+                    </div>
+                </div>
+            </div>
+            <section class="col s0" style="width:5.5555555556%;margin-left:auto;left:auto;right:auto"></section>
+            <div class="col s12 m5">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="../../img/Чикенбургер.png">
+                        <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
+                        <p><a href="#">This is a link</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div id="other" class="col s12 menu">Other</div>
 </div>
 </main>
 
@@ -141,60 +197,9 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
-<script type="text/javascript" src="../../static/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="../../materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="../../materialize/js/menu.js"></script>
+<script type="text/javascript" src="../../materialize/js/nav.js"></script>
 
-<script type="text/javascript">
-    $( document ).ready(function(){
-        $(".button-collapse").sideNav();
-        $("#shopping-cart").sideNav({
-            edge: 'right'
-        });
-        $('.carousel.carousel-slider').carousel({fullWidth: true});
-        $('.modal').modal();
-        $('.dropdown-button').dropdown({
-                inDuration: 300,
-                outDuration: 225,
-                constrainWidth: false, // Does not change width of dropdown to that of the activator
-                hover: true, // Activate on hover
-                gutter: 0, // Spacing from edge
-                belowOrigin: true, // Displays dropdown below the button
-                alignment: 'left', // Displays dropdown with edge aligned to the left of button
-                stopPropagation: false // Stops event propagation
-            }
-        );
-        $(document).ready(function(){
-            $('.scrollspy').scrollSpy();
-        });
-//        $('#sign-in').validate({
-//            rules: {
-//                number: {
-//                    required: true,
-//                    minlength: 9,
-//                    maxlength: 9,
-//                    pattern: /^(29|33|44)[0-9]*$/
-//                }
-//            },
-//            messages: {
-//                number: {
-//                    required: "error1",
-//                    minlength: "error2",
-//                    maxlength: "error3",
-//                    pattern: "error4"
-//                }
-//            },
-//            errorClass : "invalid",
-//            errorPlacement: function (error, element) {
-////                if (element.attribute('login') === 'number') {
-////                    element.data('wrong', error)
-////                }
-//                console.log(error[0].outerText);
-////                console.log($(element[0]).next()[0]);
-//                $($(element[0]).next()[0]).attr('data-error', error[0].outerText);
-//
-////                $($(element[0]).next()[0]).attr('class', "invalid");
-//            }
-//        });
-    })
-</script>
 </body>
 </html>

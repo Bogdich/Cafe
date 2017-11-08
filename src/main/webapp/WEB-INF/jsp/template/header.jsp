@@ -21,3 +21,5 @@
         </c:otherwise>
     </c:choose>
 </c:if>
+
+<%@ include file="shopping-cart.jsp"%>

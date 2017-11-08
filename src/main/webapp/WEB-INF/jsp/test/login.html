@@ -1,0 +1,141 @@
+<html>
+<head>
+    <title>Sign in page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta login="viewport" content="width=device-width, initial-scale=1"/>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../../../materialize/css/materialize.min.css" media="screen,projection"/>
+<style>
+    body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1 0 auto;
+        align-content: center;
+    }
+
+    body {
+        background: linear-gradient(220deg, #fa1a61, #0086ff);
+        background-size: 400% 400%;
+
+        -webkit-animation: AnimationName 4s ease infinite;
+        -moz-animation: AnimationName 4s ease infinite;
+        animation: AnimationName 4s ease infinite;
+    }
+
+    .input-field input[type=date] + label,
+    .input-field input[type=text] + label,
+    .input-field input[type=email] + label,
+    .input-field input[type=password] + label,
+    .input-field input[type=checkbox] + label
+    {
+        color: white;
+    }
+
+    .input-field input[type=date],
+    .input-field input[type=text],
+    .input-field input[type=email],
+    .input-field input[type=password]
+    {
+        border-bottom: 1px solid white;
+        box-shadow: none;
+    }
+
+    .input-field input[type=date]:focus + label,
+    .input-field input[type=text]:focus + label,
+    .input-field input[type=email]:focus + label,
+    .input-field input[type=password]:focus + label {
+        color: #e9cc1d;
+    }
+
+    .input-field input[type=date]:focus,
+    .input-field input[type=text]:focus,
+    .input-field input[type=email]:focus,
+    .input-field input[type=password]:focus {
+        border-bottom: 2px solid #e9cc1d;
+        box-shadow: none;
+    }
+
+    @-webkit-keyframes AnimationName {
+        0%{background-position:40% 0%}
+        50%{background-position:61% 100%}
+        100%{background-position:40% 0%}
+    }
+    @-moz-keyframes AnimationName {
+        0%{background-position:40% 0%}
+        50%{background-position:61% 100%}
+        100%{background-position:40% 0%}
+    }
+    @keyframes AnimationName {
+        0%{background-position:40% 0%}
+        50%{background-position:61% 100%}
+        100%{background-position:40% 0%}
+    }
+
+</style>
+</head>
+
+<body>
+<div class="section"></div>
+<main class="center-align">
+
+    <div class="container">
+        <div class="z-depth-1 lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+            <form class="col s12 white-text" name="loginForm" action="/controller" method="post">
+
+                <div class='row'>
+                    <div class='col s12'>
+                        <input type="hidden" name="command" value="login"/>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        <input id="login" name="login" type="text"  pattern="^[A-Za-zА-Яа-я_\d]+$" minlength="4" maxlength="45" required class="validate">
+                        <label for="login" data-error="invalid input">Login</label>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        <input id="password" login="password" type="password" pattern="^[A-Za-zА-Яа-я_\d]+$" minlength="4" maxlength="45" required class="validate">
+                        <label for="password" data-wrong="invalid characters">Password</label>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class="input-field" style="float: left">
+                        <input id="checkbox" name="remember" type="checkbox"/>
+                        <label onfocus="" for="checkbox">Remember me</label>
+                    </div>
+                </div>
+                <div class="">
+                <br>
+                <article>${errorLoginPassMessage}</article>
+                <article>${wrongAction}</article>
+                <article>${nullPage}</article>
+                </div>
+                <br />
+                <div class='row'>
+                    <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect transparent' style="border: 1px solid #EEEEEE">Login</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <a class="white-text" href="/registration">Registration</a>
+
+    <div class="section"></div>
+    <div class="section"></div>
+</main>
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../../materialize/js/materialize.min.js"></script>
+</body>
+</html>
