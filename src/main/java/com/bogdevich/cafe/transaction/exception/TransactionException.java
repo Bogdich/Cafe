@@ -1,4 +1,4 @@
-package com.bogdevich.cafe.exception;
+package com.bogdevich.cafe.transaction.exception;
 
 public class TransactionException extends Exception {
     public TransactionException() {

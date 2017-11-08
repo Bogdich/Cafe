@@ -1,6 +1,6 @@
 package com.bogdevich.cafe.transaction;
 
-import com.bogdevich.cafe.exception.DAOException;
+import com.bogdevich.cafe.dao.exception.DAOException;
 
 import java.sql.Connection;
 

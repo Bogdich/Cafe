@@ -1,6 +1,6 @@
 package com.bogdevich.cafe.transaction.function;
 
-import com.bogdevich.cafe.exception.DAOException;
+import com.bogdevich.cafe.dao.exception.DAOException;
 
 @FunctionalInterface
 public interface ExecutableTransaction<T> {

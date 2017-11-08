@@ -1,6 +1,6 @@
 package com.bogdevich.cafe.transaction;
 
-import com.bogdevich.cafe.exception.TransactionException;
+import com.bogdevich.cafe.transaction.exception.TransactionException;
 import com.bogdevich.cafe.transaction.function.ExecutableTransaction;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

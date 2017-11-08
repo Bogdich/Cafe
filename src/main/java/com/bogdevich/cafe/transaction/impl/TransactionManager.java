@@ -1,12 +1,11 @@
 package com.bogdevich.cafe.transaction.impl;
 
 import com.bogdevich.cafe.connectionpool.ConnectionPool;
-import com.bogdevich.cafe.exception.DAOException;
-import com.bogdevich.cafe.exception.TransactionException;
+import com.bogdevich.cafe.dao.exception.DAOException;
 import com.bogdevich.cafe.transaction.IDataSource;
 import com.bogdevich.cafe.transaction.ITransactionManager;
+import com.bogdevich.cafe.transaction.exception.TransactionException;
 import com.bogdevich.cafe.transaction.function.ExecutableTransaction;
-import org.apache.logging.log4j.Level;
 
 import java.sql.Connection;
 import java.util.Optional;
@@ -43,7 +42,6 @@ public class TransactionManager implements ITransactionManager, IDataSource {
             setAutoCommit(connection, false);
             result = unit.perform();
             commit(connection);
-            LOGGER.log(Level.DEBUG, "Returned result: "+result.toString());
             return result;
         } catch (DAOException ex) {
             rollback(connection);
