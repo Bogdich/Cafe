@@ -1,4 +1,4 @@
-package com.bogdevich.cafe.exception;
+package com.bogdevich.cafe.service.exception;
 
 public class InvalidDataException extends Exception {
 

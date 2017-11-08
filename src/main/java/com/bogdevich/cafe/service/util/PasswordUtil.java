@@ -1,4 +1,4 @@
-package com.bogdevich.cafe.util;
+package com.bogdevich.cafe.service.util;
 
 import static org.mindrot.jbcrypt.BCrypt.*;
 

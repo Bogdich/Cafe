@@ -1,20 +1,28 @@
 package com.bogdevich.cafe.service;
 
 import com.bogdevich.cafe.entity.bean.User;
-import com.bogdevich.cafe.entity.dto.UserContainer;
-import com.bogdevich.cafe.entity.type.Role;
-import com.bogdevich.cafe.exception.InvalidDataException;
-import com.bogdevich.cafe.exception.ReceiverException;
+import com.bogdevich.cafe.entity.wrapper.UserWrapper;
+import com.bogdevich.cafe.service.exception.InvalidDataException;
+import com.bogdevich.cafe.service.exception.ServiceException;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    Optional<User> login(String login, String password)
-            throws ReceiverException, InvalidDataException;
-    Optional<UserContainer> register(String login, String password, String Number, String street, String house, String flat)
-            throws ReceiverException, InvalidDataException;
-    List<User> findAllUsers()
-            throws ReceiverException, InvalidDataException;
+
+    Optional<User> authorize(String login, String password) throws ServiceException, InvalidDataException;
+
+    Optional<UserWrapper> register(String login, String password,
+                                   String Number, String street,
+                                   String house, String flat) throws ServiceException, InvalidDataException;
+
+    boolean loginExist(String login) throws ServiceException, InvalidDataException;
+
+    List<User> findAllUsers() throws ServiceException, InvalidDataException;
+
+    void updateLogin(int userID, String login) throws ServiceException, InvalidDataException;
+
+    boolean updatePassword(int userID, String oldPassword,
+                        String newPassword) throws ServiceException, InvalidDataException;
+
 }
