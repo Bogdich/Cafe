@@ -1,8 +1,11 @@
 package com.bogdevich.cafe.controller.filter;
 
 import com.bogdevich.cafe.command.ActionType;
-import com.bogdevich.cafe.constant.Constant;
+import com.bogdevich.cafe.command.constant.Constant;
 import com.bogdevich.cafe.entity.type.Role;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +16,8 @@ import java.util.Optional;
 
 public class RoleFilter implements Filter {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     public void destroy() {
     }
 
@@ -20,6 +25,10 @@ public class RoleFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpSession session = request.getSession(false);
+
+
+        request.getParameterMap().forEach((s, strings) -> LOGGER.log(Level.DEBUG, s + ": {" + String.join(", ", strings) + "}"));
+        LOGGER.log(Level.DEBUG, response.getStatus());
 
         String actionName = Optional
                 .ofNullable(request.getParameter(Constant.ParameterName.COMMAND))

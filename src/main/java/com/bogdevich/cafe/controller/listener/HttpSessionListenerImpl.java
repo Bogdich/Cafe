@@ -1,6 +1,6 @@
 package com.bogdevich.cafe.controller.listener;
 
-import com.bogdevich.cafe.constant.Constant;
+import com.bogdevich.cafe.command.constant.Constant;
 import com.bogdevich.cafe.entity.type.Role;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

@@ -1,7 +1,7 @@
 package com.bogdevich.cafe.controller.servlet;
 
 import com.bogdevich.cafe.command.ActionType;
-import com.bogdevich.cafe.constant.Constant;
+import com.bogdevich.cafe.command.constant.Constant;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
