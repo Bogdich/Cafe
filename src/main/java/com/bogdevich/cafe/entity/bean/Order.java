@@ -8,15 +8,32 @@ import java.util.Date;
 public class Order extends Entity {
     private BigDecimal total;
     private Date orderTime;
-    private UserInfo userInfo;
+    private int number;
+    private String street;
+    private String house;
+    private int flat;
+    private int userID;
 
     public Order() {
     }
 
-    public Order(BigDecimal total, Date orderTime, UserInfo userInfo) {
+    public Order(BigDecimal total, Date orderTime, int number, String street, String house, int flat, int userID) {
         this.total = total;
         this.orderTime = orderTime;
-        this.userInfo = userInfo;
+        this.number = number;
+        this.street = street;
+        this.house = house;
+        this.flat = flat;
+        this.userID = userID;
+    }
+
+    public Order(BigDecimal total, int number, String street, String house, int flat, int userID) {
+        this.total = total;
+        this.number = number;
+        this.street = street;
+        this.house = house;
+        this.flat = flat;
+        this.userID = userID;
     }
 
     public BigDecimal getTotal() {
@@ -27,8 +44,24 @@ public class Order extends Entity {
         return orderTime;
     }
 
-    public UserInfo getUserInfo() {
-        return userInfo;
+    public int getNumber() {
+        return number;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getHouse() {
+        return house;
+    }
+
+    public int getFlat() {
+        return flat;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 
     public void setTotal(BigDecimal total) {
@@ -39,28 +72,51 @@ public class Order extends Entity {
         this.orderTime = orderTime;
     }
 
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setHouse(String house) {
+        this.house = house;
+    }
+
+    public void setFlat(int flat) {
+        this.flat = flat;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Order)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Order order = (Order) o;
 
-        if (getTotal() != null ? !getTotal().equals(order.getTotal()) : order.getTotal() != null) return false;
-        if (getOrderTime() != null ? !getOrderTime().equals(order.getOrderTime()) : order.getOrderTime() != null)
-            return false;
-        return getUserInfo() != null ? getUserInfo().equals(order.getUserInfo()) : order.getUserInfo() == null;
+        if (number != order.number) return false;
+        if (flat != order.flat) return false;
+        if (userID != order.userID) return false;
+        if (total != null ? !total.equals(order.total) : order.total != null) return false;
+        if (orderTime != null ? !orderTime.equals(order.orderTime) : order.orderTime != null) return false;
+        if (street != null ? !street.equals(order.street) : order.street != null) return false;
+        return house != null ? house.equals(order.house) : order.house == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getTotal() != null ? getTotal().hashCode() : 0;
-        result = 31 * result + (getOrderTime() != null ? getOrderTime().hashCode() : 0);
-        result = 31 * result + (getUserInfo() != null ? getUserInfo().hashCode() : 0);
+        int result = total != null ? total.hashCode() : 0;
+        result = 31 * result + (orderTime != null ? orderTime.hashCode() : 0);
+        result = 31 * result + number;
+        result = 31 * result + (street != null ? street.hashCode() : 0);
+        result = 31 * result + (house != null ? house.hashCode() : 0);
+        result = 31 * result + flat;
+        result = 31 * result + userID;
         return result;
     }
 
@@ -69,7 +125,11 @@ public class Order extends Entity {
         final StringBuilder sb = new StringBuilder("Order{");
         sb.append("total=").append(total);
         sb.append(", orderTime=").append(orderTime);
-        sb.append(", userInfo=").append(userInfo);
+        sb.append(", number=").append(number);
+        sb.append(", street='").append(street).append('\'');
+        sb.append(", house='").append(house).append('\'');
+        sb.append(", flat=").append(flat);
+        sb.append(", userID=").append(userID);
         sb.append('}');
         return sb.toString();
     }

@@ -1,6 +1,10 @@
 package com.bogdevich.cafe.entity;
 
-public abstract class Entity{
+import java.io.Serializable;
+
+public abstract class Entity implements Serializable{
+
+    private static final Long serialVersionUID = 1L;
 
     protected int id;
 

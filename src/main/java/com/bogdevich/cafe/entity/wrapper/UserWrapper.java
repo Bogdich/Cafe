@@ -1,16 +1,16 @@
-package com.bogdevich.cafe.entity.dto;
+package com.bogdevich.cafe.entity.wrapper;
 
 import com.bogdevich.cafe.entity.bean.User;
 import com.bogdevich.cafe.entity.bean.UserInfo;
 
-public class UserContainer {
+public class UserWrapper {
     private User user;
     private UserInfo userInfo;
 
-    public UserContainer() {
+    public UserWrapper() {
     }
 
-    public UserContainer(User user, UserInfo userInfo) {
+    public UserWrapper(User user, UserInfo userInfo) {
         this.user = user;
         this.userInfo = userInfo;
     }
@@ -36,7 +36,7 @@ public class UserContainer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserContainer that = (UserContainer) o;
+        UserWrapper that = (UserWrapper) o;
 
         if (user != null ? !user.equals(that.user) : that.user != null) return false;
         return userInfo != null ? userInfo.equals(that.userInfo) : that.userInfo == null;
@@ -51,7 +51,7 @@ public class UserContainer {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("UserContainer{");
+        final StringBuilder sb = new StringBuilder("UserWrapper{");
         sb.append("user=").append(user);
         sb.append(", userInfo=").append(userInfo);
         sb.append('}');
