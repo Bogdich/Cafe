@@ -44,6 +44,9 @@ public final class ConnectionPool {
         }
     }
 
+    /**
+     *
+     */
     public void init() {
         LOGGER.log(Level.INFO, "Connection pool has been initialised");
     }
@@ -53,7 +56,6 @@ public final class ConnectionPool {
         try {
             connection = freeConnections.take();
             busyConnections.add(connection);
-            LOGGER.log(Level.DEBUG, "Connection was taken");
             return connection;
         } catch (InterruptedException ex) {
             LOGGER.log(Level.ERROR, "Interrupted while waiting for connection", ex);
@@ -66,11 +68,6 @@ public final class ConnectionPool {
             ProxyConnection proxyConnection = (ProxyConnection) connection;
             if (busyConnections.remove(proxyConnection)) {
                 freeConnections.add(proxyConnection);
-                LOGGER.log(Level.DEBUG, "Connection was retrieved");
-            } else if (freeConnections.contains(connection)) {
-                LOGGER.log(Level.DEBUG, "Connection has been already retrieved");
-            } else {
-                LOGGER.log(Level.DEBUG, "Trying to retrieve wild connection");
             }
         } else {
             LOGGER.log(Level.WARN, "Trying to retrieve wild connection");
