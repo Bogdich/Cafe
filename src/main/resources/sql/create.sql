@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS `cafe`.`category` (
   `name` VARCHAR(150) NOT NULL COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '',
   UNIQUE INDEX `name_UNIQUE` (`name` ASC)  COMMENT '')
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -48,12 +48,12 @@ CREATE TABLE IF NOT EXISTS `cafe`.`dish` (
   PRIMARY KEY (`id`)  COMMENT '',
   INDEX `fk_dish_category1_idx` (`category_id` ASC)  COMMENT '',
   CONSTRAINT `fk_dish_category1`
-  FOREIGN KEY (`category_id`)
-  REFERENCES `cafe`.`category` (`id`)
+    FOREIGN KEY (`category_id`)
+    REFERENCES `cafe`.`category` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS `cafe`.`role` (
   `name` VARCHAR(150) NOT NULL COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '',
   UNIQUE INDEX `name_UNIQUE` (`name` ASC)  COMMENT '')
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -86,12 +86,12 @@ CREATE TABLE IF NOT EXISTS `cafe`.`user` (
   UNIQUE INDEX `login_UNIQUE` (`login` ASC)  COMMENT '',
   INDEX `fk_user_role1_idx` (`role_id` ASC)  COMMENT '',
   CONSTRAINT `fk_user_role1`
-  FOREIGN KEY (`role_id`)
-  REFERENCES `cafe`.`role` (`id`)
+    FOREIGN KEY (`role_id`)
+    REFERENCES `cafe`.`role` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -111,12 +111,12 @@ CREATE TABLE IF NOT EXISTS `cafe`.`order` (
   PRIMARY KEY (`id`)  COMMENT '',
   INDEX `fk_order_user1_idx` (`user_id` ASC)  COMMENT '',
   CONSTRAINT `fk_order_user1`
-  FOREIGN KEY (`user_id`)
-  REFERENCES `cafe`.`user` (`id`)
+    FOREIGN KEY (`user_id`)
+    REFERENCES `cafe`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -134,12 +134,12 @@ CREATE TABLE IF NOT EXISTS `cafe`.`user_info` (
   PRIMARY KEY (`id`)  COMMENT '',
   INDEX `fk_user_info_user1_idx` (`user_id` ASC)  COMMENT '',
   CONSTRAINT `fk_user_info_user1`
-  FOREIGN KEY (`user_id`)
-  REFERENCES `cafe`.`user` (`id`)
+    FOREIGN KEY (`user_id`)
+    REFERENCES `cafe`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -155,17 +155,17 @@ CREATE TABLE IF NOT EXISTS `cafe`.`order_has_dish` (
   INDEX `fk_order_has_dish_dish1_idx` (`dish_id` ASC)  COMMENT '',
   INDEX `fk_order_has_dish_order1_idx` (`order_id` ASC)  COMMENT '',
   CONSTRAINT `fk_order_has_dish_order1`
-  FOREIGN KEY (`order_id`)
-  REFERENCES `cafe`.`order` (`id`)
+    FOREIGN KEY (`order_id`)
+    REFERENCES `cafe`.`order` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_order_has_dish_dish1`
-  FOREIGN KEY (`dish_id`)
-  REFERENCES `cafe`.`dish` (`id`)
+    FOREIGN KEY (`dish_id`)
+    REFERENCES `cafe`.`dish` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -181,17 +181,17 @@ CREATE TABLE IF NOT EXISTS `cafe`.`shopping_cart` (
   INDEX `fk_user_has_dish_dish2_idx` (`dish_id` ASC)  COMMENT '',
   INDEX `fk_user_has_dish_user2_idx` (`user_id` ASC)  COMMENT '',
   CONSTRAINT `fk_user_has_dish_user2`
-  FOREIGN KEY (`user_id`)
-  REFERENCES `cafe`.`user` (`id`)
+    FOREIGN KEY (`user_id`)
+    REFERENCES `cafe`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_has_dish_dish2`
-  FOREIGN KEY (`dish_id`)
-  REFERENCES `cafe`.`dish` (`id`)
+    FOREIGN KEY (`dish_id`)
+    REFERENCES `cafe`.`dish` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
