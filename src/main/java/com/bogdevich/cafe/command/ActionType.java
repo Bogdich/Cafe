@@ -1,21 +1,19 @@
 package com.bogdevich.cafe.command;
 
+import com.bogdevich.cafe.command.constant.Constant;
+import com.bogdevich.cafe.command.impl.ajax.*;
 import com.bogdevich.cafe.command.impl.auth.LoginCommand;
 import com.bogdevich.cafe.command.impl.auth.LogoutCommand;
 import com.bogdevich.cafe.command.impl.auth.RegistrationCommand;
 import com.bogdevich.cafe.command.impl.common.LanguageCommand;
 import com.bogdevich.cafe.command.impl.redirect.LoginPageCommand;
 import com.bogdevich.cafe.command.impl.redirect.MainPageCommand;
+import com.bogdevich.cafe.command.impl.redirect.MenuPageCommand;
 import com.bogdevich.cafe.command.impl.redirect.RegistrationPageCommand;
-import com.bogdevich.cafe.constant.Constant;
 import com.bogdevich.cafe.entity.type.Role;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.EnumSet;
-import java.util.HashSet;
 
 public enum ActionType {
     LOGIN(
@@ -41,6 +39,13 @@ public enum ActionType {
             Role.CUSTOMER,
             Role.ADMIN
     ),
+    TO_MENU_PAGE(
+            Constant.ActionName.MENU_PAGE,
+            new MenuPageCommand(),
+            Role.GUEST,
+            Role.CUSTOMER,
+            Role.ADMIN
+    ),
     TO_LOGIN_PAGE(
             Constant.ActionName.LOGIN_PAGE,
             new LoginPageCommand(),
@@ -57,9 +62,42 @@ public enum ActionType {
             Role.ADMIN,
             Role.CUSTOMER,
             Role.GUEST
+    ),
+    GET_DISHES_BY_CATEGORY(
+            Constant.ActionName.GET_DISHES_BY_CATEGORY,
+            new GetDishesCommand(),
+            Role.ADMIN,
+            Role.CUSTOMER,
+            Role.GUEST
+    ),
+    ADD_DISH_TO_SHOPPING_CART(
+            Constant.ActionName.ADD_DISH_TO_SC,
+            new AddDishToShoppingCartCommand(),
+            Role.ADMIN,
+            Role.CUSTOMER,
+            Role.GUEST
+    ),
+    GET_SHOPPING_CART(
+            Constant.ActionName.GET_SHOPPING_CART,
+            new GetShoppingCartCommand(),
+            Role.ADMIN,
+            Role.CUSTOMER,
+            Role.GUEST
+    ),
+    CHANGE_DISH_QUANTITY(
+            Constant.ActionName.CHANGE_QUANTITY,
+            new ChangeDishQuantityInShoppingCartCommand(),
+            Role.ADMIN,
+            Role.CUSTOMER,
+            Role.GUEST
+    ),
+    DELETE_DISH_FROM_SHOPPING_CART(
+            Constant.ActionName.DELETE_DISH_FROM_SHOPPING_CART,
+            new DeleteDishFromShoppingCartCommand(),
+            Role.ADMIN,
+            Role.CUSTOMER,
+            Role.GUEST
     );
-
-
 
     private Command command;
     private String actionName;

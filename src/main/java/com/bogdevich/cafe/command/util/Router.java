@@ -1,4 +1,4 @@
-package com.bogdevich.cafe.util;
+package com.bogdevich.cafe.command.util;
 
 public class Router {
     public enum RouteType{

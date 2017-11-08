@@ -1,12 +1,12 @@
 package com.bogdevich.cafe.command.impl.auth;
 
-import com.bogdevich.cafe.constant.Constant;
-import com.bogdevich.cafe.constant.ErrorMessage;
-import com.bogdevich.cafe.exception.InvalidDataException;
-import com.bogdevich.cafe.service.UserService;
-import com.bogdevich.cafe.service.factory.ServiceFactory;
 import com.bogdevich.cafe.command.Command;
-import com.bogdevich.cafe.exception.ReceiverException;
+import com.bogdevich.cafe.command.constant.Constant;
+import com.bogdevich.cafe.command.constant.ErrorMessage;
+import com.bogdevich.cafe.service.UserService;
+import com.bogdevich.cafe.service.exception.InvalidDataException;
+import com.bogdevich.cafe.service.exception.ServiceException;
+import com.bogdevich.cafe.service.factory.ServiceFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,12 +34,12 @@ public class LoginCommand implements Command {
 
         try {
             userService
-                    .login(login, password)
+                    .authorize(login, password)
                     .ifPresent(user -> {
                         session.setAttribute(Constant.AttributeName.ROLE, user.getRole());
                         session.setAttribute(Constant.AttributeName.USER_ID, user.getId());
                     });
-        } catch (ReceiverException ex) {
+        } catch (ServiceException ex) {
             LOGGER.log(Level.ERROR, ex.getMessage(), ex.getCause());
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (InvalidDataException ex) {

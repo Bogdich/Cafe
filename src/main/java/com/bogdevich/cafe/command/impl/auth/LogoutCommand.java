@@ -1,7 +1,7 @@
 package com.bogdevich.cafe.command.impl.auth;
 
 import com.bogdevich.cafe.command.Command;
-import com.bogdevich.cafe.constant.Constant;
+import com.bogdevich.cafe.command.constant.Constant;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

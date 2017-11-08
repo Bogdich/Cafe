@@ -1,4 +1,4 @@
-package com.bogdevich.cafe.constant;
+package com.bogdevich.cafe.command.constant;
 
 public final class ErrorMessage {
 

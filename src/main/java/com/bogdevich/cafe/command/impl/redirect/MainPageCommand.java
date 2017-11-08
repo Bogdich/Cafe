@@ -1,7 +1,7 @@
 package com.bogdevich.cafe.command.impl.redirect;
 
 import com.bogdevich.cafe.command.Command;
-import com.bogdevich.cafe.constant.JavaServerPagePath;
+import com.bogdevich.cafe.command.constant.JavaServerPagePath;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

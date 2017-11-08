@@ -1,7 +1,7 @@
 package com.bogdevich.cafe.command.impl.common;
 
 import com.bogdevich.cafe.command.Command;
-import com.bogdevich.cafe.constant.Constant;
+import com.bogdevich.cafe.command.constant.Constant;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

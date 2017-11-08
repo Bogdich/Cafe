@@ -1,13 +1,11 @@
 package com.bogdevich.cafe.command.impl.auth;
 
 import com.bogdevich.cafe.command.Command;
-import com.bogdevich.cafe.constant.Constant;
-import com.bogdevich.cafe.constant.ErrorMessage;
-import com.bogdevich.cafe.dao.UserDAO;
-import com.bogdevich.cafe.entity.type.Role;
-import com.bogdevich.cafe.exception.InvalidDataException;
-import com.bogdevich.cafe.exception.ReceiverException;
+import com.bogdevich.cafe.command.constant.Constant;
+import com.bogdevich.cafe.command.constant.ErrorMessage;
 import com.bogdevich.cafe.service.UserService;
+import com.bogdevich.cafe.service.exception.InvalidDataException;
+import com.bogdevich.cafe.service.exception.ServiceException;
 import com.bogdevich.cafe.service.factory.ServiceFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.math.BigDecimal;
 
 public class RegistrationCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -44,7 +41,7 @@ public class RegistrationCommand implements Command {
                         session.setAttribute(Constant.AttributeName.USER_ID, userContainer.getUser().getId());
                         session.setAttribute(Constant.AttributeName.ROLE, userContainer.getUser().getRole());
                     });
-        } catch (ReceiverException ex) {
+        } catch (ServiceException ex) {
             LOGGER.log(Level.ERROR, ex.getMessage(), ex.getCause());
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (InvalidDataException ex) {
