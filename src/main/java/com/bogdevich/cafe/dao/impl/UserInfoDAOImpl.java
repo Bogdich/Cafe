@@ -1,33 +1,67 @@
 package com.bogdevich.cafe.dao.impl;
 
 import com.bogdevich.cafe.dao.UserInfoDAO;
+import com.bogdevich.cafe.dao.exception.DAOException;
 import com.bogdevich.cafe.entity.bean.UserInfo;
-import com.bogdevich.cafe.exception.DAOException;
 import com.bogdevich.cafe.transaction.IDataSource;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import static com.bogdevich.cafe.constant.ErrorMessage.DAOExceptionMessage.USER_FIND_BY_ID;
-
 public class UserInfoDAOImpl implements UserInfoDAO {
-    private static final Logger LOGGER = LogManager.getLogger();
 
-    private static final String SQL_INSERT = "INSERT INTO `user_info` (`number`, `street`, `house_number`, `flat`, `user_id`) VALUES (?, ?, ?, ?, ?)";
-    private static final String SQL_SELECT_ALL = "SELECT `id`, `number`, `street`, `house_number`, `flat`, `user_id` FROM user_info";
-    private static final String SQL_SELECT_BY_ID = "SELECT `id`,`number`, `street`, `house_number`, `flat`, `user_id` FROM user_info WHERE `id`=?";
-    private static final String SQL_SELECT_BY_USER_ID = "SELECT `id`, `number`, `street`, `house_number`, `flat`, `user_id` FROM user_info WHERE `user_id`=?";
-    /**
-     * Not done
-     */
-    private static final String SQL_SELECT_BY_ORDER_ID = "SELECT `id`, `number`, `street`, `house_number`, `flat`, `user_id` FROM user_info ";
-    private static final String SQL_UPDATE = "UPDATE user_info SET `number`=?, `street`=?, `house_number`?, `flat`? WHERE `id`=?";
-    private static final String SQL_DELETE = "DELETE FROM address WHERE `id`=?";
+    private static final String SQL_INSERT = "" +
+            "INSERT INTO `cafe`.`user_info` " +
+            "   (`user_info`.`number`, " +
+            "   `user_info`.`street`, " +
+            "   `user_info`.`house_number`, " +
+            "   `user_info`.`flat`, " +
+            "   `user_info`.`user_id`) " +
+            "VALUES (?, ?, ?, ?, ?);";
+
+    private static final String SQL_SELECT_ALL = "" +
+            "SELECT " +
+            "   `user_info`.`id`, " +
+            "   `user_info`.`number`, " +
+            "   `user_info`.`street`, " +
+            "   `user_info`.`house_number`, " +
+            "   `user_info`.`flat`, " +
+            "   `user_info`.`user_id` " +
+            "FROM `cafe`.`user_info`;";
+
+    private static final String SQL_SELECT_BY_ID = "" +
+            "SELECT " +
+            "   `user_info`.`id`,`number`, " +
+            "   `user_info`.`street`, " +
+            "   `user_info`.`house_number`, " +
+            "   `user_info`.`flat`, " +
+            "   `user_info`.`user_id` " +
+            "FROM `cafe`.`user_info` " +
+            "WHERE `id`=?;";
+
+    private static final String SQL_SELECT_BY_USER_ID = "" +
+            "SELECT " +
+            "   `user_info`.`id`, " +
+            "   `user_info`.`number`, " +
+            "   `user_info`.`street`, " +
+            "   `user_info`.`house_number`, " +
+            "   `user_info`.`flat`, " +
+            "   `user_info`.`user_id` " +
+            "FROM `cafe`.`user_info` " +
+            "WHERE `user_id`=?;";
+
+    private static final String SQL_UPDATE = "" +
+            "UPDATE `user_info` SET " +
+            "   `user_info`.`number`=?, " +
+            "   `user_info`.`street`=?, " +
+            "   `user_info`.`house_number`=?, " +
+            "   `user_info`.`flat`=? " +
+            "WHERE `user_info`.`id`=?;";
+
+    private static final String SQL_DELETE = "DELETE FROM `user_info` WHERE `user_info`.`id`=?;";
 
     private final IDataSource dataSource;
 
@@ -36,108 +70,93 @@ public class UserInfoDAOImpl implements UserInfoDAO {
     }
 
     @Override
-    public Optional<UserInfo> create(int number, String street, String house, int flat, int userID) throws DAOException {
-        UserInfo userinfo;
+    public Optional<UserInfo> createUserInfo(int number, String street, String house, int flat, int userID) throws DAOException {
         Connection connection = dataSource.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, number);
-            statement.setString(2, street);
-            statement.setString(3, house);
-            statement.setInt(4, flat);
-            statement.setInt(5, userID);
-
-            int rowsAffected = statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
-
-            if (resultSet.next() && rowsAffected == 1) {
-                userinfo = new UserInfo(number, street, house, flat, userID);
-                userinfo.setId(resultSet.getInt(1));
-            } else {
-                LOGGER.log(Level.WARN, "Can not create userinfo");
-                throw new DAOException();
-            }
-        } catch (SQLException ex) {
-            throw new DAOException(ex);
+        UserInfo userInfo = null;
+        int generatedID = create(
+                connection,
+                SQL_INSERT,
+                statement -> {
+                    statement.setInt(1, number);
+                    statement.setString(2, street);
+                    statement.setString(3, house);
+                    statement.setInt(4, flat);
+                    statement.setInt(5, userID);
+                },
+                true
+        );
+        if (generatedID != 0) {
+            userInfo = new UserInfo(number, street, house, flat, userID);
+            userInfo.setId(generatedID);
         }
-        return Optional.ofNullable(userinfo);
+        return Optional.ofNullable(userInfo);
     }
 
     @Override
-    public List<UserInfo> findAll() throws DAOException {
-        ArrayList<UserInfo> userinfos = new ArrayList<>();
+    public List<UserInfo> findAllInfos() throws DAOException {
         Connection connection = dataSource.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL)) {
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                userinfos.add(insertData(resultSet));
-            }
-        } catch (SQLException ex) {
-            LOGGER.log(Level.ERROR, ex.getMessage());
-            throw new DAOException(ex);
-        }
-        return userinfos;
+        return findAllRecords(
+                connection,
+                SQL_SELECT_ALL,
+                this::getUserInfoFromRS
+        );
     }
 
     @Override
     public List<UserInfo> findUserInfoByUserId(int userID) throws DAOException {
         Connection connection = dataSource.getConnection();
-        ArrayList<UserInfo> userinfos = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_USER_ID)) {
-            statement.setInt(1, userID);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                userinfos.add(insertData(resultSet));
-            }
-            return userinfos;
-        } catch (SQLException ex) {
-            throw new DAOException(ex);
-        }
+        return findRecordList(
+                connection,
+                SQL_SELECT_BY_USER_ID,
+                statement -> statement.setInt(1, userID),
+                this::getUserInfoFromRS
+        );
     }
 
     @Override
     public Optional<UserInfo> findUserInfoByOrderId(int orderID) throws DAOException {
-//        Connection connection = dataSource.getConnection();
-//        UserInfo userinfo = null;
-//        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_ORDER_ID)) {
-//            statement.setInt(1, orderID);
-//            ResultSet resultSet = statement.executeQuery();
-//            if (resultSet.next()) {
-//                userinfo = insertData(resultSet);
-//            }
-//            return Optional.ofNullable(userinfo);
-//        } catch (SQLException ex) {
-//            throw new DAOException(USER_FIND_BY_ID, ex);
-//        }
         throw new UnsupportedOperationException();
     }
 
     @Override
     public Optional<UserInfo> findUserInfoById(int id) throws DAOException {
         Connection connection = dataSource.getConnection();
-        UserInfo userInfo = null;
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_ID)) {
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                userInfo = insertData(resultSet);
-            }
-            return Optional.ofNullable(userInfo);
-        } catch (SQLException ex) {
-            throw new DAOException(USER_FIND_BY_ID, ex);
-        }
+        return findRecord(
+                connection,
+                SQL_SELECT_BY_ID,
+                statement -> statement.setInt(1, id),
+                this::getUserInfoFromRS
+        );
+    }
+
+
+    @Override
+    public boolean updateUserInfo(UserInfo userinfo) throws DAOException {
+        Connection connection = dataSource.getConnection();
+        return update(
+                connection,
+                SQL_UPDATE,
+                statement -> {
+                    statement.setInt(1, userinfo.getNumber());
+                    statement.setString(2, userinfo.getStreet());
+                    statement.setString(3, userinfo.getHouse());
+                    statement.setInt(4, userinfo.getFlat());
+                    statement.setInt(5, userinfo.getId());
+                }
+        );
     }
 
     @Override
-    public boolean update(UserInfo userinfo) throws DAOException {
-        throw new UnsupportedOperationException();
+    public boolean deleteUserInfo(UserInfo userinfo) throws DAOException {
+        Connection connection = dataSource.getConnection();
+        return delete(
+                connection,
+                SQL_DELETE,
+                statement -> statement.setInt(1, userinfo.getId())
+        );
     }
 
-    @Override
-    public boolean delete(UserInfo userinfo) throws DAOException {
-        throw new UnsupportedOperationException();
-    }
-
-    private UserInfo insertData(ResultSet resultSet) throws SQLException {
+    private UserInfo getUserInfoFromRS(ResultSet resultSet) throws SQLException {
         UserInfo userinfo = new UserInfo();
         userinfo.setId(resultSet.getInt("id"));
         userinfo.setNumber(resultSet.getInt("number"));

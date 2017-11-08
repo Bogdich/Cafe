@@ -1,24 +1,21 @@
 package com.bogdevich.cafe.dao;
 
+import com.bogdevich.cafe.dao.exception.DAOException;
 import com.bogdevich.cafe.entity.bean.User;
 import com.bogdevich.cafe.entity.type.Role;
-import com.bogdevich.cafe.exception.DAOException;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDAO {
-    Optional<User> create(String login, String password, BigDecimal balance, Role role) throws DAOException;
+public interface UserDAO extends BaseDAO{
+    Optional<User> createUser(String login, String password, BigDecimal balance, Role role) throws DAOException;
 
-    List<User> findAll() throws DAOException;
+    List<User> findAllUsers() throws DAOException;
     Optional<User> findUserByLogin(String login) throws DAOException;
     Optional<User> findUserById(int id) throws DAOException;
 
-    boolean update(User user) throws DAOException;
-    boolean updateBalance(BigDecimal balance) throws DAOException;
-    boolean updatePassword(String password) throws DAOException;
-    boolean updateLogin(String login) throws DAOException;
+    boolean updateUser(User user) throws DAOException;
 
-    boolean delete(User user) throws DAOException;
+    boolean deleteUser(User user) throws DAOException;
 }

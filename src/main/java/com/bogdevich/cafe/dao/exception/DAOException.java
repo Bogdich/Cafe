@@ -1,4 +1,4 @@
-package com.bogdevich.cafe.exception;
+package com.bogdevich.cafe.dao.exception;
 
 public class DAOException extends Exception {
     public DAOException() {
