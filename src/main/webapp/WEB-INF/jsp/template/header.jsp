@@ -23,3 +23,4 @@
 </c:if>
 
 <%@ include file="shopping-cart.jsp"%>
+<%@ include file="create-order.jsp"%>

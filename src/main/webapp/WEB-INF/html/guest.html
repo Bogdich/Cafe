@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Main page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta login="viewport" content="width=device-width, initial-scale=1"/>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../../static/materialize/css/materialize.min.css" media="screen,projection"/>
+</head>
+
+<body>
+<div class="navbar-fixed">
+    <nav class="blue-grey darken-3">
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo">Logo</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="">About</a></li>
+                <li><a href="">Menu</a></li>
+                <li><a href="">Contact</a></li>
+                <li><a class="" href="" ><i class="white-text material-icons">add_shopping_cart</i></a></li>
+                <li><a class="dropdown-button" data-activates="dropdown-lang"><i class="material-icons">language</i></a></li>
+                <ul id="dropdown-lang" class="dropdown-content">
+                    <li><a class="">EN</a></li>
+                    <li><a class="">RU</a></li>
+                </ul>
+                <li><a class="waves-effect waves-light btn" href="#form">Sign in</a></li>
+            </ul>
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href="">About</a></li>
+                <li><a href="">Menu</a></li>
+                <li><a href="">Contact</a></li>
+                <li><a class="" href="" ><i class="material-icons">add_shopping_cart</i></a></li>
+                <li><a class=""><i class="material-icons">language</i></a></li>
+                <li><a class="waves-effect waves-light btn" href="#form">Sign in</a></li>
+                <!--<li><form action="/controller">-->
+                <!--<input type="hidden" login="command" value="login-page">-->
+                <!--<button type="submit" class="waves-effect waves-light btn" value="LOGIN"></button>-->
+                <!--</form></li>-->
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse right"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+</div>
+<ul id="slide-out" class="side-nav">
+    <li><div class="userOld-view">
+        <div class="background">
+            <img src="images/office.jpg">
+        </div>
+        <a href="#!userOld"><img class="circle" src="images/yuna.jpg"></a>
+        <a href="#!login"><span class="white-text login">John Doe</span></a>
+        <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+</ul>
+<!-- Modal Structure -->
+<div id="form" class="modal" style="width: 50vh;">
+    <form id="sign-in" style="overflow: hidden" login="loginForm" action="/controller" method="post">
+        <input type="hidden" login="command" value="login"/>
+        <div class="modal-content">
+            <div class="input-field">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="number" login="number" type="text" pattern="^(25|29|33|44)[0-9]+$" minlength="9" maxlength="9" required class="validate">
+                <label for="number" data-error="">Number</label>
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">lock</i>
+                <input id="password" login="password" type="password" pattern="^.*$" minlength="4" maxlength="45" required class="validate">
+                <label for="password">Password</label>
+            </div>
+            <div class="input-field">
+                <input id="checkbox" login="remember" type="checkbox"/>
+                <label for="checkbox">Remember me</label>
+            </div>
+            <div class="">
+                <br>
+                <article>${errorLoginPassMessage}</article>
+                <article>${wrongAction}</article>
+                <article>${nullPage}</article>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" class="modal-action waves-effect waves-green btn" value="Sign in">
+            <input type="submit" class="modal-action waves-effect waves-green btn" value="Sign in">
+        </div>
+    </form>
+</div>
+
+<div class="carousel carousel-slider center" style="min-height: 92vh" data-indicators="true">
+    <div class="carousel-fixed-item center">
+        <a class="btn waves-effect white grey-text darken-text-2">button</a>
+    </div>
+    <div class="carousel-item red white-text" href="#one!">
+        <h2>First Panel</h2>
+        <p class="white-text">This is your first panel</p>
+    </div>
+    <div class="carousel-item amber white-text" href="#two!">
+        <h2>Second Panel</h2>
+        <p class="white-text">This is your second panel</p>
+    </div>
+    <div class="carousel-item green white-text" href="#three!">
+        <h2>Third Panel</h2>
+        <p class="white-text">This is your third panel</p>
+    </div>
+    <div class="carousel-item blue white-text" href="#four!">
+        <h2>Fourth Panel</h2>
+        <p class="white-text">This is your fourth panel</p>
+    </div>
+</div>
+
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
+<script type="text/javascript" src="../../static/materialize/js/materialize.min.js"></script>
+
+<script type="text/javascript">
+    $( document ).ready(function(){
+        $(".button-collapse").sideNav();
+        $('.carousel.carousel-slider').carousel({fullWidth: true});
+        $('.modal').modal();
+        $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: false, // Does not change width of dropdown to that of the activator
+                hover: true, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: true, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: false // Stops event propagation
+            }
+        );
+        $(".button-collapse").sideNav();
+
+//        $('#sign-in').validate({
+//            rules: {
+//                number: {
+//                    required: true,
+//                    minlength: 9,
+//                    maxlength: 9,
+//                    pattern: /^(29|33|44)[0-9]*$/
+//                }
+//            },
+//            messages: {
+//                number: {
+//                    required: "error1",
+//                    minlength: "error2",
+//                    maxlength: "error3",
+//                    pattern: "error4"
+//                }
+//            },
+//            errorClass : "invalid",
+//            errorPlacement: function (error, element) {
+////                if (element.attribute('login') === 'number') {
+////                    element.data('wrong', error)
+////                }
+//                console.log(error[0].outerText);
+////                console.log($(element[0]).next()[0]);
+//                $($(element[0]).next()[0]).attr('data-error', error[0].outerText);
+//
+////                $($(element[0]).next()[0]).attr('class', "invalid");
+//            }
+//        });
+    })
+</script>
+</body>
+</html>

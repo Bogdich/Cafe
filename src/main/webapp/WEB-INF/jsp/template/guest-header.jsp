@@ -3,7 +3,7 @@
 <div class="navbar-fixed">
     <nav class="blue-grey darken-3">
         <div class="nav-wrapper container">
-            <a href="#" class="brand-logo">${sessionScope.role}</a>
+            <a href="#" class="brand-logo"></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="${pageContext.request.contextPath}/controller?command=main-page">
                     <fmt:message bundle="${lang}" key="navbar.main"/>
@@ -58,12 +58,12 @@
                     <fmt:message bundle="${lang}" key="form.password"/>
                 </label>
             </div>
-            <div class="input-field">
+<%--            <div class="input-field">
                 <input id="checkbox" name="remember" type="checkbox"/>
                 <label for="checkbox">
                     <fmt:message bundle="${lang}" key="form.remember"/>
                 </label>
-            </div>
+            </div>--%>
         </div>
         <div class="modal-footer">
             <button type="submit" class="modal-action waves-effect waves-green btn">

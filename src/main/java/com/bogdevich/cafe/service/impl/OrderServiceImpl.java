@@ -30,7 +30,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> createOrder(String phoneNumber, String street, String house, String flat, int userID)
+    public Optional<Order> createOrder(String phoneNumber, String street, String house,
+                                       String flat, int userID)
             throws ServiceException, InvalidDataException {
 
         int validNumber = Validator.parsePhoneNumber(phoneNumber);
@@ -74,6 +75,53 @@ public class OrderServiceImpl implements OrderService {
                     throw new DAOException("Exception while creating order.");
                 }
              });
+        } catch (TransactionException ex) {
+            throw new ServiceException(ex);
+        }
+    }
+
+    @Override
+    public Optional<Order> createOrder(String number, String street, String house, String flat, int userID, Map<Dish, Integer> shoppingCart) throws ServiceException, InvalidDataException {
+        int validNumber = Validator.parsePhoneNumber(number);
+        String validStreet = Validator.parseStreet(street);
+        String validHouse = Validator.parseHouse(house);
+        int validFlat = Validator.parseFlat(flat);
+
+        OrderDAO orderDAO = daoFactory.getOrderDAO();
+        DishDAO dishDAO = daoFactory.getDishDAO();
+
+        try {
+
+            BiConsumer<? super BigDecimal, ? super Order> adder = (item, order) -> {
+                BigDecimal total = order.getTotal();
+                order.setTotal(total.add(item));
+            };
+
+            return transactionManager.executeInTransaction(() -> {
+
+                Order order = new Order(BigDecimal.ZERO, validNumber,
+                        validStreet, validHouse, validFlat, userID);
+                if (!shoppingCart.isEmpty()) {
+                    shoppingCart.forEach((dish, integer) -> {
+                        BigDecimal quantity = BigDecimal.valueOf(integer);
+                        BigDecimal itemCost = dish.getPrice().multiply(quantity);
+                        adder.accept(itemCost, order);
+                    });
+                } else {
+                    return Optional.empty();
+                }
+
+                int generatedID = orderDAO.createOrder(order);
+                if (generatedID != 0) {
+                    for (Map.Entry<Dish, Integer> entry : shoppingCart.entrySet()) {
+                        dishDAO.createOrderDishRecord(generatedID, entry.getKey().getId(), entry.getValue());
+                        dishDAO.deleteUserDishRecord(userID, entry.getKey().getId());
+                    }
+                    return Optional.of(order);
+                } else {
+                    throw new DAOException("Exception while creating order.");
+                }
+            });
         } catch (TransactionException ex) {
             throw new ServiceException(ex);
         }

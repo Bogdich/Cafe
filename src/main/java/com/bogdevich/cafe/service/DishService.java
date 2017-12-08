@@ -5,6 +5,7 @@ import com.bogdevich.cafe.service.exception.InvalidDataException;
 import com.bogdevich.cafe.service.exception.ServiceException;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -86,4 +87,12 @@ public interface DishService {
 
     Integer getShoppingCartSize(HttpSession session)
             throws ServiceException, InvalidDataException;
+
+    BigDecimal getShoppingCartTotalCost(int userID)
+            throws ServiceException, InvalidDataException;
+
+    BigDecimal getShoppingCartTotalCost(HttpSession session)
+            throws ServiceException, InvalidDataException;
+
+    Map<Dish, Integer> getMapAttributeFromSession(HttpSession session);
 }

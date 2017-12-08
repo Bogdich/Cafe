@@ -53,7 +53,10 @@ public final class Constant {
         public static final String GET_SHOPPING_CART = "get-shopping-cart";
         public static final String CHANGE_QUANTITY = "change-quantity";
         public static final String DELETE_DISH_FROM_SHOPPING_CART = "delete-dish-from-shopping-cart";
-
+        public static final String CHECK_SHOPPING_CART_SIZE = "check-shopping-cart-size";
+        public static final String FILL_ORDER_FORM_WITH_USER_INFO = "fill-order-form-with-user-info";
+        public static final String FILL_ORDER_FORM_WITH_TOTAL_COST = "fill-order-form-with-total-cost";
+        public static final String CREATE_ORDER = "create-order";
     }
 
     private Constant() {

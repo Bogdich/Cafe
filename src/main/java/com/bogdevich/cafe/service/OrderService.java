@@ -6,6 +6,7 @@ import com.bogdevich.cafe.service.exception.InvalidDataException;
 import com.bogdevich.cafe.service.exception.ServiceException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface OrderService {
@@ -13,6 +14,11 @@ public interface OrderService {
     Optional<Order> createOrder(String number, String street,
                                 String house, String flat,
                                 int userID) throws ServiceException, InvalidDataException;
+
+    Optional<Order> createOrder(String number, String street,
+                                String house, String flat,
+                                int userID, Map<Dish, Integer> shoppingCart)
+            throws ServiceException, InvalidDataException;
 
     List<Order> findAll() throws ServiceException;
 

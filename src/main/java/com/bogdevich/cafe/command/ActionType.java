@@ -97,6 +97,33 @@ public enum ActionType {
             Role.ADMIN,
             Role.CUSTOMER,
             Role.GUEST
+    ),
+    CHECK_SHOPPING_CART_SIZE(
+            Constant.ActionName.CHECK_SHOPPING_CART_SIZE,
+            new CheckShoppingCartSizeCommand(),
+            Role.ADMIN,
+            Role.CUSTOMER,
+            Role.GUEST
+    ),
+    FILL_ORDER_FORM_WITH_USER_INFO(
+            Constant.ActionName.FILL_ORDER_FORM_WITH_USER_INFO,
+            new FillOrderFormWithUserInfoCommand(),
+            Role.ADMIN,
+            Role.CUSTOMER
+    ),
+    FILL_ORDER_FORM_WITH_TOTAL_COST(
+            Constant.ActionName.FILL_ORDER_FORM_WITH_TOTAL_COST,
+            new FillOrderFormWithTotalCostCommand(),
+            Role.ADMIN,
+            Role.CUSTOMER,
+            Role.GUEST
+    ),
+    CREATE_ORDER(
+            Constant.ActionName.CREATE_ORDER,
+            new CreateOrderCommand(),
+            Role.ADMIN,
+            Role.CUSTOMER,
+            Role.GUEST
     );
 
     private Command command;

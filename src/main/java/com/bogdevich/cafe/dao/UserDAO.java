@@ -14,6 +14,7 @@ public interface UserDAO extends BaseDAO{
     List<User> findAllUsers() throws DAOException;
     Optional<User> findUserByLogin(String login) throws DAOException;
     Optional<User> findUserById(int id) throws DAOException;
+    List<User> findUserByRoleId(int roleID) throws DAOException;
 
     boolean updateUser(User user) throws DAOException;
 

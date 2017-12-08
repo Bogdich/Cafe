@@ -6,6 +6,7 @@ import com.bogdevich.cafe.dao.exception.DAOException;
 import com.bogdevich.cafe.dao.factory.DAOFactory;
 import com.bogdevich.cafe.entity.bean.Dish;
 import com.bogdevich.cafe.entity.type.Category;
+import com.bogdevich.cafe.entity.wrapper.AnswerWrapper;
 import com.bogdevich.cafe.service.DishService;
 import com.bogdevich.cafe.service.exception.InvalidDataException;
 import com.bogdevich.cafe.service.exception.ServiceException;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 public class DishServiceImpl implements DishService {
 
@@ -443,8 +445,22 @@ public class DishServiceImpl implements DishService {
         return getMapAttributeFromSession(session).size();
     }
 
+    @Override
+    public BigDecimal getShoppingCartTotalCost(int userID)
+            throws ServiceException, InvalidDataException {
+        Map<Dish, Integer> shoppingCart = this.findUserDishMap(userID);
+        return this.countShoppingCartTotalCost(shoppingCart);
+    }
+
+    @Override
+    public BigDecimal getShoppingCartTotalCost(HttpSession session)
+            throws ServiceException, InvalidDataException {
+        Map<Dish, Integer> shoppingCart = this.getMapAttributeFromSession(session);
+        return this.countShoppingCartTotalCost(shoppingCart);
+    }
+
     @SuppressWarnings("unchecked")
-    private Map<Dish, Integer> getMapAttributeFromSession(HttpSession session) {
+    public Map<Dish, Integer> getMapAttributeFromSession(HttpSession session) {
         Object mapObject = Optional
                 .ofNullable(session.getAttribute(Constant.AttributeName.SHOPPING_CART))
                 .orElseGet(
@@ -454,5 +470,21 @@ public class DishServiceImpl implements DishService {
                             return dishIntegerMap;
                         });
         return (HashMap<Dish, Integer>) mapObject;
+    }
+
+    private BigDecimal countShoppingCartTotalCost(Map<Dish, Integer> shoppingCart) {
+        AnswerWrapper<BigDecimal> resultWrapper = new AnswerWrapper<>(BigDecimal.ZERO);
+        BiConsumer<? super BigDecimal, ? super AnswerWrapper<BigDecimal>> adder = (item, wrapper) -> {
+            BigDecimal mediator = wrapper.getAnswer();
+            wrapper.setAnswer(mediator.add(item));
+        };
+        if (!shoppingCart.isEmpty()) {
+            shoppingCart.forEach((dish, integer) -> {
+                BigDecimal quantity = BigDecimal.valueOf(integer);
+                BigDecimal itemCost = dish.getPrice().multiply(quantity);
+                adder.accept(itemCost, resultWrapper);
+            });
+        }
+        return resultWrapper.getAnswer();
     }
 }

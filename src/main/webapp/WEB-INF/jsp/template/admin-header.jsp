@@ -3,7 +3,7 @@
 <div class="navbar-fixed">
     <nav class="blue-grey darken-3">
         <div class="nav-wrapper container">
-            <a href="#" class="brand-logo">${sessionScope.role}</a>
+            <a href="#" class="brand-logo"><i class="large material-icons">account_box</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="${pageContext.request.contextPath}/controller?command=main-page">
                     <fmt:message bundle="${lang}" key="navbar.main"/>
@@ -14,7 +14,7 @@
                 <li><a href="">
                     <fmt:message bundle="${lang}" key="navbar.contact"/>
                 </a></li>
-                <li><a id="shopping-cart" class="" href="" data-activates="slide-out"><i class="white-text material-icons">add_shopping_cart</i></a></li>
+                <li><a id="shopping-cart" class="" href="" data-activates="shopping-cart-div"><i class="white-text material-icons">add_shopping_cart</i></a></li>
                 <li><a class="dropdown-button" data-activates="dropdown-lang"><i class="material-icons">language</i></a></li>
                 <li>
                     <ul id="dropdown-lang" class="dropdown-content">

@@ -109,6 +109,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findUserByRoleId(Role role) throws ServiceException, InvalidDataException {
+        UserDAO userDAO = daoFactory.getUserDAO();
+        try {
+            return transactionManager
+                    .executeInTransaction(() -> userDAO.findUserByRoleId(role.getId()));
+        } catch (TransactionException ex) {
+            throw new ServiceException(ex);
+        }
+    }
+
+    @Override
+    public Optional<UserInfo> findUserInfo(int userID) throws ServiceException, InvalidDataException {
+        UserInfoDAO userInfoDAO = daoFactory.getUserInfoDAO();
+        try {
+            List<UserInfo> infoList = transactionManager
+                    .executeInTransaction(() -> userInfoDAO.findUserInfoByUserId(userID));
+            return (!infoList.isEmpty())? Optional.of(infoList.get(0)) : Optional.empty();
+        } catch (TransactionException ex) {
+            throw new ServiceException(ex);
+        }
+    }
+
+    @Override
     public boolean loginExist(String login) throws ServiceException, InvalidDataException {
         String validLogin = parseLogin(login);
         UserDAO userDAO = daoFactory.getUserDAO();

@@ -55,6 +55,16 @@ public class UserDAOImpl implements UserDAO {
             "FROM `cafe`.`user` " +
             "WHERE `id`=?;";
 
+    private static final String SQL_SELECT_BY_ROLE_ID = "" +
+            "SELECT " +
+            "   `user`.`id`, " +
+            "   `user`.`login`, " +
+            "   `user`.`password`, " +
+            "   `user`.`account_balance`, " +
+            "   `user`.`role_id` " +
+            "FROM `cafe`.`user` " +
+            "WHERE `role_id`=?;";
+
     private static final String SQL_UPDATE_USER = "" +
             "UPDATE `cafe`.`user` SET " +
             "   `user`.`login`=?, " +
@@ -124,6 +134,17 @@ public class UserDAOImpl implements UserDAO {
                 connection,
                 SQL_SELECT_BY_ID,
                 statement -> statement.setInt(1, id),
+                this::getUserFromRS
+        );
+    }
+
+    @Override
+    public List<User> findUserByRoleId(int roleID) throws DAOException {
+        Connection connection = dataSource.getConnection();
+        return findRecordList(
+                connection,
+                SQL_SELECT_BY_ROLE_ID,
+                preparedStatement -> preparedStatement.setInt(1, roleID),
                 this::getUserFromRS
         );
     }

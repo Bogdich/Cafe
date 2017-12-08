@@ -66,7 +66,20 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#checkout', function () {
-
+        checkShoppingCartSize(function (size) {
+            if (size>0) {
+                fillOrderFormWithUserInfo();
+                fillOrderFormWithTotalCost();
+                $('#modal1').modal('open');
+            }
+        });
+    });
+    $(document).on('click', '#order-create-button', function () {
+        checkShoppingCartSize(function (size) {
+            if (size>0) {
+                createOrder();
+            }
+        });
     })
 });
 
@@ -271,7 +284,7 @@ function deleteDishFromShoppingCart(trow, id) {
 /**
  * Check size of shopping cart
  */
-function checkShoppingCartSize() {
+function checkShoppingCartSize(returnSize) {
     var request = $.ajax({
         url: 'controller',
         type: 'GET',
@@ -280,12 +293,81 @@ function checkShoppingCartSize() {
         },
         dataType: 'json'
     });
+    request
+        .done(function (data) {
+            returnSize(data.answer);
+        })
+        .error(function () {
 
+        });
+}
+
+function fillOrderFormWithUserInfo() {
+    var request = $.ajax({
+        url: 'controller',
+        type: 'GET',
+        data: {
+            command: 'fill-order-form-with-user-info'
+        },
+        dataType: 'json'
+    });
+    request
+        .done(function (userInfo) {
+            $('#order-street').val(userInfo.street);
+            $('#order-house').val(userInfo.house);
+            $('#order-flat').val(userInfo.flat);
+            $('#order-phone-number').val(userInfo.number);
+            Materialize.updateTextFields();
+            console.log(userInfo);
+        })
+        .error(function () {
+
+        });
+}
+
+function fillOrderFormWithTotalCost() {
+    var request = $.ajax({
+        url: 'controller',
+        type: 'GET',
+        data: {
+            command: 'fill-order-form-with-total-cost'
+        },
+        dataType: 'json'
+    });
+    request
+        .done(function (answer) {
+            $('#order-total-cost').html(answer.answer);
+
+        })
+        .error(function () {
+
+        });
 }
 
 /**
  * Create order
  */
-function checkout() {
+function createOrder() {
+    var request = $.ajax({
+        url: "controller",
+        type: 'POST',
+        data: {
+            command: "create-order",
+            street: $('#order-street').val(),
+            house: $('#order-house').val(),
+            flat: $('#order-flat').val(),
+            number: $('#order-phone-number').val()
+        },
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: 'json'
+    });
+    request
+        .done(function (data) {
+            console.log(data);
+            $('.button-collapse').sideNav('hide');
+            Materialize.toast(data, 4000);
 
+        })
+        .error(function () {
+        });
 }
